@@ -1,0 +1,86 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	border: 0;
+	padding: 0;
+	list-style: none;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+	background-color: #000000;
+	color: white;
+}
+
+#page-container {
+	padding: 5px;
+}
+
+.nav-bar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 10;
+	width: 100%;
+	height: 50px;
+	font-size: 20px;
+	background-color: #000000;
+	border-bottom-style: solid;
+	border-color: #555555;
+	border-width: 2px;
+}
+
+.nav-mobile {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 50px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.nav-open,
+.nav-close,
+.logo {
+	height: 30px;
+}
+
+.nav-list {
+	display: none;
+	background-color: #53d7e0;
+}
+
+.navName {
+	color: black;
+}
+
+.navList > li {
+	display: flex;
+	justify-content: flex-end;
+	padding: 10px;
+}
+
+.navLink {
+	color: black;
+	margin: 5px 10px 5px 10px;
+}
+
+.navLink:hover {
+	cursor: pointer;
+	color: white;
+}
+
+.hidefromBurgerMonster {
+	display: none !important;
+}
+
+.topspacer {
+	width: 100%;
+	padding-bottom: 50px;
+}

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<link
+			href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="images/apple-touch-icon.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="images/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="images/favicon-16x16.png"
+		/>
+		<link rel="manifest" href="images/site.webmanifest" />
+		<title>Game Life</title>
+	</head>
+
+	<body>
+		<nav class="nav-bar">
+			<div class="nav-container">
+				<div class="nav-mobile">
+					<div class="nav-logo">
+						<img
+							class="logo"
+							src="images/apple-touch-icon.png"
+						/>
+					</div>
+					<div class="nav-menu">
+						<img
+							src="images/openNav.png"
+							alt="Navigation Open"
+							class="nav-open"
+						/>
+					</div>
+				</div>
+				<div class="nav-wrap">
+					<ul class="nav-list">
+						<li class="navHome">
+							<a class="navLink"
+								>Home
+							</a>
+						</li>
+						<li class="navProjects">
+							<a class="navLink"
+								>Projects
+							</a>
+						</li>
+						<li class="navAbout">
+							<a class="navLink"
+								>About
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<!-- <input
+						type="text"
+						class="search-param"
+					/>
+					<input type="checkbox" class="genre-param" />
+					<input type="checkbox" class="platforms-param" />
+					<input type="text" class="publishers-param " />
+					<button type="submit">Search</button> -->
+
+		<div class="topspacer"></div>
+
+		<div id="page-container">
+			<section class="web-page" id="home">
+				<div class="web-container" id="home-container">
+					<ul
+						class="web-list"
+						id="home-list"
+					></ul>
+				</div>
+			</section>
+
+			<section class="web-page" id="new-release">
+				<div class="web-container" id="new-container">
+					<ul class="web-list" id="new-list"></ul>
+				</div>
+			</section>
+
+			<section class="web-page" id="coming-soon">
+				<div class="web-container" id="soon-container">
+					<ul
+						class="web-list"
+						id="soon-list"
+					></ul>
+				</div>
+			</section>
+
+			<section class="web-page" id="game-database">
+				<div class="web-container" id="game-container">
+					<ul
+						class="web-list"
+						id="game-list"
+					></ul>
+				</div>
+			</section>
+
+			<section class="web-page" id="contact-page">
+				<div
+					class="web-container"
+					id="contact-container"
+				>
+					<ul
+						class="web-list"
+						id="contact-list"
+					></ul>
+				</div>
+			</section>
+
+			<script
+				src="https://code.jquery.com/jquery-3.4.1.js"
+				integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+				crossorigin="anonymous"
+			></script>
+
+			<script src="script.js"></script>
+		</div>
+	</body>
+</html>
