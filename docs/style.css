@@ -21,66 +21,36 @@ body {
 	padding: 5px;
 }
 
-.nav-bar {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	z-index: 10;
-	width: 100%;
-	height: 50px;
-	font-size: 20px;
-	background-color: #000000;
-	border-bottom-style: solid;
-	border-color: #555555;
-	border-width: 2px;
-}
-
-.nav-mobile {
+#card-list {
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height: 50px;
-	margin-left: 5px;
-	margin-right: 5px;
+	flex-flow: row wrap;
 }
 
-.nav-open,
-.nav-close,
-.logo {
-	height: 30px;
-}
-
-.nav-list {
-	display: none;
-	background-color: #53d7e0;
-}
-
-.navName {
-	color: black;
-}
-
-.navList > li {
+.game-card {
 	display: flex;
-	justify-content: flex-end;
+	flex-flow: column wrap;
 	padding: 10px;
 }
 
-.navLink {
-	color: black;
-	margin: 5px 10px 5px 10px;
+.game-border {
+	border-style: solid;
+	border-width: 2px;
+	padding: 5px;
+	width: 280px;
+	height: 280px;
 }
 
-.navLink:hover {
-	cursor: pointer;
-	color: white;
+.game-name {
+	font-size: 25px;
+	font-weight: 900;
 }
 
-.hidefromBurgerMonster {
-	display: none !important;
+.game-image {
+	width: 200px;
+	height: auto;
 }
 
-.topspacer {
-	width: 100%;
-	padding-bottom: 50px;
+.image-container {
+	display: flex;
+	flex-flow: row wrap;
 }

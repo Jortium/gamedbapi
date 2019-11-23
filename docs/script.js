@@ -26,10 +26,10 @@ function fetchGames() {
 		...($('.publishers-param').val() && {
 			develpors: $('.publishers-param').val()
 		}),
-		...($('.publishers-param').val() && {
-			publishers: $('.publishers-param').val()
+		...($('.id-param').val() && {
+			publishers: $('.id-param').val()
 		}),
-		page_size: '1'
+		page_size: '5'
 	};
 
 	console.log(params);
@@ -55,6 +55,7 @@ function displayResults(responseJson) {
 			name: game.name,
 			released: game.released,
 			consoles: game.platforms,
+			id: game.id,
 			//multiple items
 			score: game.metacritic,
 			genre: game.genres,
@@ -69,18 +70,24 @@ function displayResults(responseJson) {
 function inputData(gamedata) {
 	let html = '';
 	gamedata.forEach(input => {
-		html += `<span class="game-name">${input.name}</span>`;
+		html += `<li class = "game-card">`;
+		html += `<div class= "game-border">`;
+		html += `<a class="game-name" href='https://api.rawg.io/api/games/${input.id}'>${input.name}</a >`;
 		html += `<br><br><span class="game-rating">Metacritic: ${input.score ||
-			'No metacritic rating'}</span>`;
-		html += '<br><br>Platforms:<br />';
+			'No metacritic rating available'}</span>`;
+		html += `<br><span>Platforms:`;
 		input.consoles.forEach(e => {
-			html += `<span class ="game-platform">${e.platform.name}</span><br />`;
+			html += ` ${e.platform.name} </span>`;
 		});
-		input.store.forEach(f => {
-			html += `<img src=${f.image} class="game-image">`;
-		});
+		// html += `<div class="image-container">`;
+		// input.images.forEach(function(f) {
+		// 	html += `<img src=${f.image} class="game-image">`;
+		// });
+		// html += `</div>`;
+		html += `</div>`;
+		html += `</li>`;
 	});
-	$(`#home-list`).html(html);
+	$(`#card-list`).html(html);
 }
 
 function pageLoad() {
