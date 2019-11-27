@@ -7,6 +7,9 @@
 			content="width=device-width, initial-scale=1.0"
 		/>
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+		<script src="https://use.fontawesome.com/197fc87076.js"></script>
+
 		<link rel="stylesheet" type="text/css" href="style.css" />
 		<link
 			href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
@@ -33,10 +36,29 @@
 		<title>It's OP</title>
 	</head>
 
+	<div class="button-wrap" id="top-button">
+		<button class="web-button" id="game-filters">
+			Filters & More
+		</button>
+	</div>
+
+	<div id="top-spacer"></div>
+
+	<div id="showorhide">
+		<input type="text" placeholder="Search..." name="search" />
+		<button type="submit">
+			<i class="fab fa-searchengin"></i>
+		</button>
+		<button class="accordian-button">Platforms</button>
+		<button class="accordian-button">Genres</button>
+		<button class="accordian-button">Release Date</button>
+		<button class="accordian-button">Contact Me</button>
+	</div>
+
 	<body>
 		<div id="page-container">
-			<section class="web-page" id="home">
-				<div class="web-container" id="home-container">
+			<section class="web-page" id="main">
+				<div class="web-container" id="main-container">
 					<ul
 						class="web-list"
 						id="card-list"
@@ -49,7 +71,7 @@
 				integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 				crossorigin="anonymous"
 			></script>
-
+			<script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
 			<script src="script.js"></script>
 		</div>
 	</body>

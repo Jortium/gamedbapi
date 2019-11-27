@@ -1,3 +1,28 @@
+let trackResults = 0;
+let gameResponse;
+
+const params = {
+	...($('.id-param').val() && {
+		page: $('.id-param').val()
+	}),
+	page_size: '12',
+	parent_platforms: '1,2,3,5,6,7'
+	// ...($('.search-param').val() && {
+	// 	search: $('.search-param').val()
+	// }),
+	// ...($('.genre-param').val() && {
+	// 	genres: $('.genre-param').val()
+	// }),
+	// ...($('.platforms-param').val() && {
+	// 	platforms: $('.platforms-param').val()
+	// }),
+	// ...($('.id-param').val() && {
+	// 	publishers: $('.id-param').val()
+	// }),
+	// dates: '2019-11-01,2019-11-24',
+	// ordering: '-rating',
+};
+
 function formatParams(params) {
 	const queryItems = Object.keys(params).map(
 		key => `${key}=${params[key]}`
@@ -12,43 +37,25 @@ const opts = {
 	}
 };
 
+const baseURL = 'https://api.rawg.io/api/games';
+const queryString = formatParams(params);
+let url = `${baseURL}?${queryString}`;
+console.log(url);
+
 function fetchGames() {
-	const params = {
-		...($('.search-param').val() && {
-			search: $('.search-param').val()
-		}),
-		...($('.genre-param').val() && {
-			genres: $('.genre-param').val()
-		}),
-		...($('.platforms-param').val() && {
-			platforms: $('.platforms-param').val()
-		}),
-		...($('.publishers-param').val() && {
-			develpors: $('.publishers-param').val()
-		}),
-		...($('.id-param').val() && {
-			publishers: $('.id-param').val()
-		}),
-		page_size: '5'
-	};
-
-	console.log(params);
-
-	const baseURL = 'https://api.rawg.io/api/games';
-	const queryString = formatParams(params);
-	let url = `${baseURL}?${queryString}`;
-
-	console.log(url);
-
 	fetch(`${url}`, opts)
 		.then(response => response.json())
-		.then(responseJson => displayResults(responseJson))
+		.then(responseJson => {
+			gameResponse = responseJson;
+			displayResults(responseJson);
+		})
 		.catch(error => {
 			console.log(`Something went wrong: ${error.message}`);
 		});
 }
 
 function displayResults(responseJson) {
+	console.log(responseJson);
 	const gamedata = responseJson.results.map(game => {
 		return {
 			//single item
@@ -68,26 +75,26 @@ function displayResults(responseJson) {
 }
 
 function inputData(gamedata) {
-	let html = '';
+	let info = ' ';
 	gamedata.forEach(input => {
-		html += `<li class = "game-card">`;
-		html += `<div class= "game-border">`;
-		html += `<a class="game-name" href='https://api.rawg.io/api/games/${input.id}'>${input.name}</a >`;
-		html += `<br><br><span class="game-rating">Metacritic: ${input.score ||
+		info += `<li class = "game-card">`;
+		info += `<div class= "game-border">`;
+		info += `<a class="game-name" href='https://api.rawg.io/api/games/${input.id}'>${input.name}</a >`;
+		info += `<br><br><span class="game-rating">Metacritic: ${input.score ||
 			'No metacritic rating available'}</span>`;
-		html += `<br><span>Platforms:`;
+		info += `<br><span>Platforms:`;
 		input.consoles.forEach(e => {
-			html += ` ${e.platform.name} </span>`;
+			info += ` ${e.platform.name} </span>`;
 		});
-		// html += `<div class="image-container">`;
+		// info += `<div class="image-container">`;
 		// input.images.forEach(function(f) {
-		// 	html += `<img src=${f.image} class="game-image">`;
+		// 	info += `<img src=${f.image} class="game-image">`;
 		// });
-		// html += `</div>`;
-		html += `</div>`;
-		html += `</li>`;
+		// info += `</div>`;
+		info += `</div>`;
+		info += `</li>`;
 	});
-	$(`#card-list`).html(html);
+	$('#card-list').html(info);
 }
 
 function pageLoad() {
@@ -96,4 +103,8 @@ function pageLoad() {
 	});
 }
 
-pageLoad();
+function initializeListeners() {
+	pageLoad();
+}
+
+$(initializeListeners());
