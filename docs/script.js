@@ -1,11 +1,7 @@
-let trackResults = 0;
-let gameResponse;
+let pageNum = 0;
 
-const params = {
-	...($('.id-param').val() && {
-		page: $('.id-param').val()
-	}),
-	page_size: '12',
+let params = {
+	page_size: '10',
 	parent_platforms: '1,2,3,5,6,7'
 	// ...($('.search-param').val() && {
 	// 	search: $('.search-param').val()
@@ -23,6 +19,14 @@ const params = {
 	// ordering: '-rating',
 };
 
+function generateDate() {
+	let today = new Date();
+	let dd = String(today.getDate()).padStart(2, '0');
+	let mm = String(today.getMonth() + 1).padStart(2, '0');
+	let yyyy = today.getFullYear();
+	today = yyyy + '/' + mm + '/' + dd;
+}
+
 function formatParams(params) {
 	const queryItems = Object.keys(params).map(
 		key => `${key}=${params[key]}`
@@ -37,16 +41,19 @@ const opts = {
 	}
 };
 
-const baseURL = 'https://api.rawg.io/api/games';
-const queryString = formatParams(params);
-let url = `${baseURL}?${queryString}`;
-console.log(url);
+function generateURL() {
+	pageNum++;
+	let baseURL = `https://api.rawg.io/api/games`;
+	const queryString = formatParams(params);
+	let url = `${baseURL}?page=${pageNum}&${queryString}`;
+	console.log(pageNum);
+	return url;
+}
 
 function fetchGames() {
-	fetch(`${url}`, opts)
+	fetch(generateURL(), opts)
 		.then(response => response.json())
 		.then(responseJson => {
-			gameResponse = responseJson;
 			displayResults(responseJson);
 		})
 		.catch(error => {
@@ -55,8 +62,10 @@ function fetchGames() {
 }
 
 function displayResults(responseJson) {
-	console.log(responseJson);
 	const gamedata = responseJson.results.map(game => {
+		// for (i = trackResults; i < trackResults+6; i++); {
+		// 	if (i === 0 || (i > trackResults && i < trackResults + 6)) {
+		// 		console.log(trackResults);
 		return {
 			//single item
 			name: game.name,
@@ -71,11 +80,12 @@ function displayResults(responseJson) {
 		};
 	});
 	console.log(gamedata);
+	// trackResults + 6;
 	inputData(gamedata);
 }
 
 function inputData(gamedata) {
-	let info = ' ';
+	let info = '';
 	gamedata.forEach(input => {
 		info += `<li class = "game-card">`;
 		info += `<div class= "game-border">`;
@@ -94,7 +104,21 @@ function inputData(gamedata) {
 		info += `</div>`;
 		info += `</li>`;
 	});
-	$('#card-list').html(info);
+	$('#card-list')
+		.fadeIn()
+		.append(info);
+}
+
+function infiniteScroll() {
+	$(window).scroll(function() {
+		// End of the document reached?
+		if (
+			$(document).height() - $(this).height() - 10 <=
+			$(this).scrollTop()
+		) {
+			fetchGames();
+		}
+	});
 }
 
 function pageLoad() {
@@ -105,6 +129,7 @@ function pageLoad() {
 
 function initializeListeners() {
 	pageLoad();
+	infiniteScroll();
 }
 
 $(initializeListeners());
