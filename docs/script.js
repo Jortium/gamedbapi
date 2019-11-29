@@ -1,5 +1,3 @@
-let pageNum = 0;
-
 let params = {
 	page_size: '10',
 	parent_platforms: '1,2,3,5,6,7'
@@ -41,6 +39,8 @@ const opts = {
 	}
 };
 
+let pageNum = 0;
+
 function generateURL() {
 	pageNum++;
 	let baseURL = `https://api.rawg.io/api/games`;
@@ -63,9 +63,6 @@ function fetchGames() {
 
 function displayResults(responseJson) {
 	const gamedata = responseJson.results.map(game => {
-		// for (i = trackResults; i < trackResults+6; i++); {
-		// 	if (i === 0 || (i > trackResults && i < trackResults + 6)) {
-		// 		console.log(trackResults);
 		return {
 			//single item
 			name: game.name,
@@ -80,7 +77,6 @@ function displayResults(responseJson) {
 		};
 	});
 	console.log(gamedata);
-	// trackResults + 6;
 	inputData(gamedata);
 }
 
@@ -111,7 +107,6 @@ function inputData(gamedata) {
 
 function infiniteScroll() {
 	$(window).scroll(function() {
-		// End of the document reached?
 		if (
 			$(document).height() - $(this).height() - 10 <=
 			$(this).scrollTop()
