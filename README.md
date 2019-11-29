@@ -1,5 +1,1 @@
-#ignore eslint files
-node_modules
-.eslintrc.json
-package-lock.json
-package.json
+This is an API gathering app that gathers information from the game database RAWG. There are quite a few challenges when it comes to this. My hardest challenge is the ability to make the names on the game cards pop up with additional information based on game id. This can be used by anyone who is interested in video games and more information on them. Once complete I hope to add additional features to continue to grow this application.
