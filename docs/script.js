@@ -1,6 +1,6 @@
 let params = {
-	page_size: '10',
-	parent_platforms: '1,2,3,5,6,7'
+	page_size: '12',
+	// parent_platforms: '1,2,3,5,6,7',
 	// ...($('.search-param').val() && {
 	// 	search: $('.search-param').val()
 	// }),
@@ -10,12 +10,15 @@ let params = {
 	// ...($('.platforms-param').val() && {
 	// 	platforms: $('.platforms-param').val()
 	// }),
+	platforms: $(`input[type=checkbox][name=platform]:checked`).val()
 	// ...($('.id-param').val() && {
 	// 	publishers: $('.id-param').val()
-	// }),
+	// })
 	// dates: '2019-11-01,2019-11-24',
 	// ordering: '-rating',
 };
+
+console.log(params);
 
 function generateDate() {
 	let today = new Date();
@@ -35,7 +38,7 @@ function formatParams(params) {
 
 const opts = {
 	headers: {
-		'User-Agent': `<ClassProject> / <VER 0.01> <Currently in Alpha testing>`
+		'User-Agent': `<ClassProject> / <VER 0.02> <Currently in Alpha testing>`
 	}
 };
 
@@ -78,14 +81,46 @@ function displayResults(responseJson) {
 	});
 	console.log(gamedata);
 	inputData(gamedata);
+	// fetchGameID(gamedata);
 }
+
+// function fetchGameID(gamedata) {
+// 	gamedata.forEach(url => {
+// 		const idurl = `https://api.rawg.io/api/games/${url.id}`;
+// 		fetch(idurl, opts)
+// 			.then(secondary => secondary.json())
+// 			.then(secondaryJson => {
+// 				inputData(secondaryJson);
+// 			})
+// 			.catch(error => {
+// 				console.log(
+// 					`Something went wrong: ${error.message}`
+// 				);
+// 			});
+// 	});
+// }
+
+// function inputGameID(secondaryJson) {
+// 	console.log(secondaryJson);
+// 	const moredata = secondaryJson.forEach(sole => {
+// 		return {
+// 			title: sole.name,
+// 			description: sole.description
+// 		};
+// 	});
+// }
 
 function inputData(gamedata) {
 	let info = '';
 	gamedata.forEach(input => {
 		info += `<li class = "game-card">`;
 		info += `<div class= "game-border">`;
-		info += `<a class="game-name" href='https://api.rawg.io/api/games/${input.id}'>${input.name}</a >`;
+		info += `<div class= "game-name">${input.name}</div>`;
+		// info += `<div class="overlay">`;
+		// info += `${input.title}`;
+		// info += `${input.genre}`;
+		// info += `${input.store}`;
+		// info += `</div>`;
 		info += `<br><br><span class="game-rating">Metacritic: ${input.score ||
 			'No metacritic rating available'}</span>`;
 		info += `<br><span>Platforms:`;
@@ -107,8 +142,9 @@ function inputData(gamedata) {
 
 function infiniteScroll() {
 	$(window).scroll(function() {
+		// End of the document reached?
 		if (
-			$(document).height() - $(this).height() - 10 <=
+			$(document).height() - $(this).height() ===
 			$(this).scrollTop()
 		) {
 			fetchGames();
