@@ -1,26 +1,46 @@
+function generateDate() {
+	let date = new Date();
+	let present =
+		date.getFullYear() +
+		'-' +
+		(date.getMonth() + 1) +
+		'-' +
+		date.getDate();
+	let predate = new Date(new Date().setDate(date.getDate() - 30));
+	let past =
+		predate.getFullYear() +
+		'-' +
+		(predate.getMonth() + 1) +
+		'-' +
+		predate.getDate();
+	return `${past},${present}`;
+}
+
+console.log(generateDate());
+
 const params = {
 	//Permanent Params
-	parent_platforms: '1,2,3,5,6,7',
+	parent_platforms: '2,3,7',
 	page_size: '10',
 	//Adjustable Params
-	...($('.search-param').val() && {
-		search: $('.search-param').val()
-	}),
-	genres: $(`input[type=checkbox][name=genre]:checked`).val(),
-	platforms: $(`input[type=checkbox][name=platform]:checked`).val(),
-	dates: '2019-11-01,2019-11-30',
+	// ...($('.search-param').val() && {
+	// 	search: $('.search-param').val()
+	// }),
+	// 	genres: $(`.genre input[type=checkbox][name=genre]:checked`).val().change(function () {
+	// 		if ($(".genre input:checkbox:checked").length > 0)
+	// 	}
+	// 		()
+	// {
+
+	// }
+	// }),
+	// 	platforms: $(`input[type=checkbox][name=platform]:checked`).val(),
+	dates: generateDate(),
 	ordering: '-rating'
 };
 
 console.log(params);
 
-function generateDate() {
-	let today = new Date();
-	let dd = String(today.getDate()).padStart(2, '0');
-	let mm = String(today.getMonth() + 1).padStart(2, '0');
-	let yyyy = today.getFullYear();
-	today = yyyy + '/' + mm + '/' + dd;
-}
 //Take params set from above and format them into workable URL to fetch data.
 function formatParams(params) {
 	const queryItems = Object.keys(params).map(
@@ -133,9 +153,7 @@ function inputData(gamedata) {
 		info += `</div>`;
 		info += `</li>`;
 	});
-	$('#card-list')
-		.fadeIn()
-		.append(info);
+	$('#card-list').append(info);
 }
 
 /*Check to ensure where the user is on the page. If they have reached 
@@ -143,7 +161,7 @@ a point it will fetch more data from the next page.*/
 function infiniteScroll() {
 	$(window).scroll(function() {
 		if (
-			$(document).height() - $(this).height() - 100 <
+			$(document).height() - $(this).height() ===
 			$(this).scrollTop()
 		) {
 			fetchGames();
