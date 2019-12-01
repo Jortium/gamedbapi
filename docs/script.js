@@ -1,21 +1,15 @@
-let params = {
-	page_size: '12',
-	// parent_platforms: '1,2,3,5,6,7',
-	// ...($('.search-param').val() && {
-	// 	search: $('.search-param').val()
-	// }),
-	// ...($('.genre-param').val() && {
-	// 	genres: $('.genre-param').val()
-	// }),
-	// ...($('.platforms-param').val() && {
-	// 	platforms: $('.platforms-param').val()
-	// }),
-	platforms: $(`input[type=checkbox][name=platform]:checked`).val()
-	// ...($('.id-param').val() && {
-	// 	publishers: $('.id-param').val()
-	// })
-	// dates: '2019-11-01,2019-11-24',
-	// ordering: '-rating',
+const params = {
+	//Permanent Params
+	parent_platforms: '1,2,3,5,6,7',
+	page_size: '10',
+	//Adjustable Params
+	...($('.search-param').val() && {
+		search: $('.search-param').val()
+	}),
+	genres: $(`input[type=checkbox][name=genre]:checked`).val(),
+	platforms: $(`input[type=checkbox][name=platform]:checked`).val(),
+	dates: '2019-11-01,2019-11-30',
+	ordering: '-rating'
 };
 
 console.log(params);
@@ -27,7 +21,7 @@ function generateDate() {
 	let yyyy = today.getFullYear();
 	today = yyyy + '/' + mm + '/' + dd;
 }
-
+//Take params set from above and format them into workable URL to fetch data.
 function formatParams(params) {
 	const queryItems = Object.keys(params).map(
 		key => `${key}=${params[key]}`
@@ -36,14 +30,17 @@ function formatParams(params) {
 	return queryItems.join('&');
 }
 
+//Per requirements of RAWG's API usage they want only a user-agent header.
 const opts = {
 	headers: {
 		'User-Agent': `<ClassProject> / <VER 0.02> <Currently in Alpha testing>`
 	}
 };
 
+//API will load 12 per page then based on the next function will continue to add a page to progress load.
 let pageNum = 0;
 
+//Using the page number and the formatted params generated above it will create a URL.
 function generateURL() {
 	pageNum++;
 	let baseURL = `https://api.rawg.io/api/games`;
@@ -53,6 +50,7 @@ function generateURL() {
 	return url;
 }
 
+//This will send a request based on the URL above and bring it into a workable JSON data file to work with.
 function fetchGames() {
 	fetch(generateURL(), opts)
 		.then(response => response.json())
@@ -64,6 +62,7 @@ function fetchGames() {
 		});
 }
 
+//The results from the fetch end up here to be mapped and changed in to a workable array list.
 function displayResults(responseJson) {
 	const gamedata = responseJson.results.map(game => {
 		return {
@@ -73,7 +72,6 @@ function displayResults(responseJson) {
 			consoles: game.platforms,
 			id: game.id,
 			//multiple items
-			score: game.metacritic,
 			genre: game.genres,
 			store: game.stores,
 			images: game.short_screenshots
@@ -110,6 +108,8 @@ function displayResults(responseJson) {
 // 	});
 // }
 
+/*The data gathered above is brought here to 
+be changed into something that will appear on the client end for viewing.*/
 function inputData(gamedata) {
 	let info = '';
 	gamedata.forEach(input => {
@@ -121,8 +121,6 @@ function inputData(gamedata) {
 		// info += `${input.genre}`;
 		// info += `${input.store}`;
 		// info += `</div>`;
-		info += `<br><br><span class="game-rating">Metacritic: ${input.score ||
-			'No metacritic rating available'}</span>`;
 		info += `<br><span>Platforms:`;
 		input.consoles.forEach(e => {
 			info += ` ${e.platform.name} </span>`;
@@ -140,11 +138,12 @@ function inputData(gamedata) {
 		.append(info);
 }
 
+/*Check to ensure where the user is on the page. If they have reached 
+a point it will fetch more data from the next page.*/
 function infiniteScroll() {
 	$(window).scroll(function() {
-		// End of the document reached?
 		if (
-			$(document).height() - $(this).height() ===
+			$(document).height() - $(this).height() - 100 <
 			$(this).scrollTop()
 		) {
 			fetchGames();
@@ -152,15 +151,18 @@ function infiniteScroll() {
 	});
 }
 
+//On inital load of the document initalize the data fetch.
 function pageLoad() {
 	$(document).ready(function() {
 		fetchGames();
 	});
 }
 
+//A function to tell the browser what to initalize.
 function initializeListeners() {
 	pageLoad();
 	infiniteScroll();
 }
 
-$(initializeListeners());
+//Initalize the initalizer.
+initializeListeners();
