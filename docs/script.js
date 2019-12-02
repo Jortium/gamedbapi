@@ -1,3 +1,27 @@
+function parameterButton() {
+	$('#game-filters-closed').click(function() {
+		$('#parameters').slideToggle();
+	});
+}
+
+function platformButton() {
+	$('#platform-button').click(function() {
+		$('#platform-container').slideToggle();
+	});
+}
+
+function genreButton() {
+	$('#genre-button').click(function() {
+		$('#genre-container').slideToggle();
+	});
+}
+function contactButton() {
+	$('#contact-button').click(function() {
+		$('#contact-container').slideToggle();
+	});
+}
+
+//This will generate the dates needed to make
 function generateDate() {
 	let date = new Date();
 	let present =
@@ -16,27 +40,18 @@ function generateDate() {
 	return `${past},${present}`;
 }
 
-console.log(generateDate());
-
 const params = {
 	//Permanent Params
-	parent_platforms: '2,3,7',
+	parent_platforms: '1,2,3,5,6,7',
 	page_size: '10',
 	//Adjustable Params
-	// ...($('.search-param').val() && {
-	// 	search: $('.search-param').val()
-	// }),
-	// 	genres: $(`.genre input[type=checkbox][name=genre]:checked`).val().change(function () {
-	// 		if ($(".genre input:checkbox:checked").length > 0)
-	// 	}
-	// 		()
-	// {
-
-	// }
-	// }),
-	// 	platforms: $(`input[type=checkbox][name=platform]:checked`).val(),
-	dates: generateDate(),
-	ordering: '-rating'
+	...($('.search-param').val() && {
+		search: $('.search-param').val()
+	}),
+	genres: $(`input[type=checkbox][name=genre]:checked`).val(),
+	platforms: $(`input[type=checkbox][name=platform]:checked`).val(),
+	// dates: generateDate(),
+	ordering: '-released'
 };
 
 console.log(params);
@@ -176,10 +191,20 @@ function pageLoad() {
 	});
 }
 
+function pageLoadClick() {
+	$('.fa-searchengin').on('click', function() {
+		fetchGames();
+	});
+}
+
 //A function to tell the browser what to initalize.
 function initializeListeners() {
 	pageLoad();
 	infiniteScroll();
+	parameterButton();
+	genreButton();
+	contactButton();
+	platformButton();
 }
 
 //Initalize the initalizer.
