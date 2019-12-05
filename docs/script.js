@@ -30,7 +30,7 @@ function generateDate() {
 		(date.getMonth() + 1) +
 		'-' +
 		date.getDate();
-	let predate = new Date(new Date().setDate(date.getDate() - 30));
+	let predate = new Date(new Date().setDate(date.getDate() + 366));
 	let past =
 		predate.getFullYear() +
 		'-' +
@@ -42,26 +42,21 @@ function generateDate() {
 
 const params = {
 	//Permanent Params
-	parent_platforms: '1,2,3,5,6,7',
+	parent_platforms: '2,3,6,7',
 	page_size: '10',
 	//Adjustable Params
-	...($('.search-param').val() && {
-		search: $('.search-param').val()
-	}),
 	genres: $(`input[type=checkbox][name=genre]:checked`).val(),
 	platforms: $(`input[type=checkbox][name=platform]:checked`).val(),
 	// dates: generateDate(),
 	ordering: '-released'
 };
-
-console.log(params);
+console.log('Parameter Check', params);
 
 //Take params set from above and format them into workable URL to fetch data.
 function formatParams(params) {
 	const queryItems = Object.keys(params).map(
 		key => `${key}=${params[key]}`
 	);
-	console.log(queryItems);
 	return queryItems.join('&');
 }
 
@@ -73,32 +68,36 @@ const opts = {
 };
 
 //API will load 12 per page then based on the next function will continue to add a page to progress load.
-let pageNum = 0;
+let pageNum = 1;
+let loading = false;
 
 //Using the page number and the formatted params generated above it will create a URL.
-function generateURL() {
-	pageNum++;
+function generateURL(game) {
 	let baseURL = `https://api.rawg.io/api/games`;
+	if (game) {
+		params.search = game;
+	}
 	const queryString = formatParams(params);
 	let url = `${baseURL}?page=${pageNum}&${queryString}`;
-	console.log(pageNum);
 	return url;
 }
 
 //This will send a request based on the URL above and bring it into a workable JSON data file to work with.
-function fetchGames() {
-	fetch(generateURL(), opts)
+function fetchGames(game) {
+	fetch(generateURL(game), opts)
 		.then(response => response.json())
 		.then(responseJson => {
-			displayResults(responseJson);
+			mapResults(responseJson);
 		})
 		.catch(error => {
 			console.log(`Something went wrong: ${error.message}`);
 		});
+	console.log('Page Check', pageNum);
 }
 
 //The results from the fetch end up here to be mapped and changed in to a workable array list.
-function displayResults(responseJson) {
+
+function mapResults(responseJson) {
 	const gamedata = responseJson.results.map(game => {
 		return {
 			//single item
@@ -108,67 +107,60 @@ function displayResults(responseJson) {
 			id: game.id,
 			//multiple items
 			genre: game.genres,
-			store: game.stores,
-			images: game.short_screenshots
+			store: game.stores
 		};
 	});
-	console.log(gamedata);
 	inputData(gamedata);
-	// fetchGameID(gamedata);
+	liveFilter(gamedata);
 }
 
-// function fetchGameID(gamedata) {
-// 	gamedata.forEach(url => {
-// 		const idurl = `https://api.rawg.io/api/games/${url.id}`;
-// 		fetch(idurl, opts)
-// 			.then(secondary => secondary.json())
-// 			.then(secondaryJson => {
-// 				inputData(secondaryJson);
-// 			})
-// 			.catch(error => {
-// 				console.log(
-// 					`Something went wrong: ${error.message}`
-// 				);
-// 			});
-// 	});
-// }
-
-// function inputGameID(secondaryJson) {
-// 	console.log(secondaryJson);
-// 	const moredata = secondaryJson.forEach(sole => {
-// 		return {
-// 			title: sole.name,
-// 			description: sole.description
-// 		};
-// 	});
-// }
+function liveFilter(gamedata) {
+	// Declare variables
+	let platform = '';
+	gamedata.forEach(function(select) {
+		select.consoles.forEach(function(find) {
+			platform += find.platform.id;
+		});
+	});
+	console.log(platform);
+	$('input[type=checkbox][name=platform]').click(function() {
+		$('.game-card').hide();
+		$('input[type=checkbox][name=platform]:checked').each(
+			function() {
+				$('.game-card')
+					.val(platform)
+					.show();
+			}
+		);
+	});
+}
 
 /*The data gathered above is brought here to 
 be changed into something that will appear on the client end for viewing.*/
-function inputData(gamedata) {
+function inputData(gameData) {
 	let info = '';
-	gamedata.forEach(input => {
-		info += `<li class = "game-card">`;
-		info += `<div class= "game-border">`;
-		info += `<div class= "game-name">${input.name}</div>`;
-		// info += `<div class="overlay">`;
-		// info += `${input.title}`;
-		// info += `${input.genre}`;
-		// info += `${input.store}`;
-		// info += `</div>`;
-		info += `<br><span>Platforms:`;
-		input.consoles.forEach(e => {
-			info += ` ${e.platform.name} </span>`;
+	gameData.forEach(input => {
+		input.consoles.forEach((a, i) => {
+			input.genre.forEach(b => {
+				const ids = a.platform.id[i];
+				info += `<div class = ${ids}>`;
+				info += `<li class = "game-card">`;
+				console.log(ids);
+				info += `<div class= "game-border">`;
+				info += `<div class= "game-name">${input.name}</div>`;
+				info += `<br><span>Platforms:`;
+				info += ` ${a.platform.name} </span>`;
+
+				info += `<br><span>Genres:`;
+
+				info += ` ${b.name} </span>`;
+				info += `</li>`;
+				info += `</div>`;
+			});
 		});
-		// info += `<div class="image-container">`;
-		// input.images.forEach(function(f) {
-		// 	info += `<img src=${f.image} class="game-image">`;
-		// });
-		// info += `</div>`;
-		info += `</div>`;
-		info += `</li>`;
 	});
 	$('#card-list').append(info);
+	loading = false;
 }
 
 /*Check to ensure where the user is on the page. If they have reached 
@@ -176,10 +168,14 @@ a point it will fetch more data from the next page.*/
 function infiniteScroll() {
 	$(window).scroll(function() {
 		if (
-			$(document).height() - $(this).height() ===
+			$(document).height() - $(this).height() - 350 <
 			$(this).scrollTop()
 		) {
-			fetchGames();
+			if (!loading) {
+				pageNum++;
+				loading = true;
+				fetchGames();
+			}
 		}
 	});
 }
@@ -192,8 +188,16 @@ function pageLoad() {
 }
 
 function pageLoadClick() {
-	$('.fa-searchengin').on('click', function() {
-		fetchGames();
+	$('.search-games').submit(function(e) {
+		e.preventDefault();
+		if (params.search) {
+			delete params.search;
+		}
+		const searchParam = $('.search-param').val();
+		$('#card-list').empty();
+		$('#parameters').slideToggle();
+		pageNum = 1;
+		fetchGames(searchParam);
 	});
 }
 
@@ -205,6 +209,7 @@ function initializeListeners() {
 	genreButton();
 	contactButton();
 	platformButton();
+	pageLoadClick();
 }
 
 //Initalize the initalizer.

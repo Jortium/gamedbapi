@@ -12,6 +12,7 @@
 html,
 body {
 	width: 100%;
+	margin: 10px;
 }
 
 body {
@@ -41,30 +42,49 @@ body {
 	display: none;
 }
 
+#disclosure-container {
+	display: none;
+}
+
+#contact-container > a {
+	color: white;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-items: flex-start;
+	width: 100px;
+}
+
 #top-button {
 	display: block;
 	top: 0;
-	left: 0;
+	right: 0;
+	float: right;
 	z-index: 10;
 	position: fixed;
-	margin: 10px;
+	background-color: black;
+	width: 100%;
 }
 
 #top-spacer {
 	height: 50px;
 }
 
-#search-button {
+#search-games {
 	background-color: transparent;
 }
 
-.search {
+.search-param {
+	border-style: solid;
+	border-width: 1px;
+	margin: 5px;
 	width: 200px;
 	height: 50px;
 }
 
 .fa-searchengin {
 	font-size: 30px;
+	color: white;
 }
 
 .button-styles > button {
@@ -107,4 +127,8 @@ body {
 .game-name {
 	font-size: 25px;
 	font-weight: 900;
+}
+
+.overlay {
+	display: none;
 }

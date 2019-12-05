@@ -23,11 +23,12 @@
 		</button>
 
 <div id="parameters">
-	
-    <input type="text" placeholder="Search..." name="search" class="search" />
-    <button type="submit" class="web-button" id="search-button">
+	<form class="search-games">    
+    <input type="text" placeholder="Search..." name="search" class="search-param" />
+        <button type="submit" class="web-button" id="search-button">
 			<i class="fab fa-searchengin"></i>
-		</button>
+        </button>
+    </form>
 
 <div class="button-styles">
     <button id="platform-button">Platforms</button>
@@ -38,25 +39,25 @@
 
         <br />
 
-        <input type="checkbox" id="platform-switch" class="platform" name="platform" value="7" checked="true" />
+        <input type="checkbox" id="platform-switch" class="platform" name="platform" value="7"/>
         <label for="platform-switch">Nintendo Switch</label>
 
-        <input type="checkbox" id="platform-ps4" class="platform" name="platform" value="18" checked="true" />
+        <input type="checkbox" id="platform-ps4" class="platform" name="platform" value="18" />
         <label for="platform-ps4">Playstation 4</label>
 
-        <input type="checkbox" id="platform-xb1" class="platform" name="xbox-one" value="1" checked="true" />
+        <input type="checkbox" id="platform-xb1" class="platform" name="platform" value="1"/>
         <label for="platform-xb1">Xbox One</label>
 
-        <input type="checkbox" id="platform-3ds" class="platform" name="nintendo3ds" value="8" />
+        <input type="checkbox" id="platform-3ds" class="platform" name="platform" value="8" checked="true"/>
         <label for="platform-3ds">Nintendo 3DS</label>
 
-        <input type="checkbox" id="platform-pc" class="platform" name="PCmasterrace" value="4" />
+        <input type="checkbox" id="platform-pcMasterRace" class="platform" name="platform" value="4"/>
         <label for="platform-pc">PC</label>
 
-        <input type="checkbox" id="platform-linux" class="platform" name="linux" value="6" />
+        <input type="checkbox" id="platform-linux" class="platform" name="platform" value="6" />
         <label for="platform-linux">Linux</label>
 
-        <input type="checkbox" id="platform-mac" class="platform" name="mac" value="5" />
+        <input type="checkbox" id="platform-mac" class="platform" name="platform" value="5" />
         <label for="platform-mac">Mac</label>
     </div>
 
@@ -133,8 +134,17 @@
         <a href="https://github.com/OrtizJosh"><i class="fab fa-github"></i>GitHub</a>
         <a href="https://www.linkedin.com/in/joshua-ortiz-188745184/"><i class="fab fa-linkedin-in"></i>LinkedIn</a>
     </div>
-</div>
 
+        <button id="contact-button">Disclosure</button>
+    <div id="disclosure-container"  class="param-container">
+<span>RAWG API was used to produce the results present. This is not menat for commerical use in any way.
+    The games have all rights reserved by their publishers and their developers. 
+    For lack of a better option PC Games are filtered to only Linux and Console releases. If PC games alone 
+    are allowed you will see nothing but PC games due to the sheer high volume of realeases on a daily basis.
+</span>
+    </div>
+
+</div>
 </div>
 </div>
 
