@@ -96,22 +96,52 @@ function fetchGames(game) {
 }
 
 //The results from the fetch end up here to be mapped and changed in to a workable array list.
-
 function mapResults(responseJson) {
 	const gamedata = responseJson.results.map(game => {
 		return {
 			//single item
 			name: game.name,
-			released: game.released,
-			consoles: game.platforms,
-			id: game.id,
 			//multiple items
-			genre: game.genres,
-			store: game.stores
+			platform: game.platforms,
+			genre: game.genres
+			// video: game.clip
 		};
 	});
+	// console.log(gamedata);
 	inputData(gamedata);
 	liveFilter(gamedata);
+}
+
+function inputData(gamedata) {
+	let info = '';
+	gamedata.forEach(input => {
+		info += `<li class = "game-card">`;
+		info += `<div class= "game-border">`;
+		// info += `<div class= "game-clip">`;
+		// input.video.forEach(a => {
+		// 	info += `<video width="320" height="240" controls>
+		//  <source src="${a.clips.full}" type="video/mp4">
+		// Your browser does not support the video tag.
+		// </video>`;
+		// });
+		// info += `</div>`;
+		info += `<div class= "game-name">${input.name}</div>`;
+		info += `<br><span>Platforms:`;
+		input.platform.forEach(b => {
+			info += ` ${b.platform.name}`;
+		});
+		info += `</span>`;
+		info += `<br><br>`;
+		info += `<span>Genres:`;
+		input.genre.forEach(c => {
+			info += ` ${c.name} `;
+		});
+		info += `</span>`;
+		info += `</li>`;
+		info += `</div>`;
+	});
+	$('#card-list').append(info);
+	loading = false;
 }
 
 function liveFilter(gamedata) {
@@ -122,13 +152,12 @@ function liveFilter(gamedata) {
 			platform += find.platform.id;
 		});
 	});
-	console.log(platform);
 	$('input[type=checkbox][name=platform]').click(function() {
 		$('.game-card').hide();
 		$('input[type=checkbox][name=platform]:checked').each(
 			function() {
-				$('.game-card')
-					.val(platform)
+				$('.platform')
+					.val()
 					.show();
 			}
 		);
@@ -137,31 +166,6 @@ function liveFilter(gamedata) {
 
 /*The data gathered above is brought here to 
 be changed into something that will appear on the client end for viewing.*/
-function inputData(gameData) {
-	let info = '';
-	gameData.forEach(input => {
-		input.consoles.forEach((a, i) => {
-			input.genre.forEach(b => {
-				const ids = a.platform.id[i];
-				info += `<div class = ${ids}>`;
-				info += `<li class = "game-card">`;
-				console.log(ids);
-				info += `<div class= "game-border">`;
-				info += `<div class= "game-name">${input.name}</div>`;
-				info += `<br><span>Platforms:`;
-				info += ` ${a.platform.name} </span>`;
-
-				info += `<br><span>Genres:`;
-
-				info += ` ${b.name} </span>`;
-				info += `</li>`;
-				info += `</div>`;
-			});
-		});
-	});
-	$('#card-list').append(info);
-	loading = false;
-}
 
 /*Check to ensure where the user is on the page. If they have reached 
 a point it will fetch more data from the next page.*/
