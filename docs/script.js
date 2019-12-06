@@ -1,6 +1,13 @@
+//Buttons to allow expand and collapse buttons.
 function parameterButton() {
-	$('#game-filters-closed').click(function() {
+	$('#game-filters').click(function() {
 		$('#parameters').slideToggle();
+		$('.button-text').empty();
+		if ($('#parameters').is(':visible') === true) {
+			$('.button-text').html(`Close Menu`);
+		} else {
+			$('.button-text').html(`Filters & More`);
+		}
 	});
 }
 
@@ -21,7 +28,13 @@ function contactButton() {
 	});
 }
 
-//This will generate the dates needed to make
+function disclosureButton() {
+	$('#disclosure-button').click(function() {
+		$('#disclosure-container').slideToggle();
+	});
+}
+
+//This will generate the dates needed to fit critera.
 function generateDate() {
 	let date = new Date();
 	let present =
@@ -40,6 +53,7 @@ function generateDate() {
 	return `${past},${present}`;
 }
 
+//Parameters to filter results.
 const params = {
 	//Permanent Params
 	parent_platforms: '2,3,6,7',
@@ -67,8 +81,9 @@ const opts = {
 	}
 };
 
-//API will load 12 per page then based on the next function will continue to add a page to progress load.
+//API will load page then based will continue to add a page as long as there is one to be generated.
 let pageNum = 1;
+//Halts multiple instances of infinite scroll to a controlled single page.
 let loading = false;
 
 //Using the page number and the formatted params generated above it will create a URL.
@@ -82,7 +97,7 @@ function generateURL(game) {
 	return url;
 }
 
-//This will send a request based on the URL above and bring it into a workable JSON data file to work with.
+//With URL generated it will make a request based on the URL above and bring it into a workable JSON file.
 function fetchGames(game) {
 	fetch(generateURL(game), opts)
 		.then(response => response.json())
@@ -103,15 +118,16 @@ function mapResults(responseJson) {
 			name: game.name,
 			//multiple items
 			platform: game.platforms,
-			genre: game.genres
-			// video: game.clip
+			genre: game.genres,
+			video: game.clip
 		};
 	});
-	// console.log(gamedata);
+	console.log(gamedata);
 	inputData(gamedata);
 	liveFilter(gamedata);
 }
 
+//Then that array list ends up here for client side visability.
 function inputData(gamedata) {
 	let info = '';
 	gamedata.forEach(input => {
@@ -144,6 +160,7 @@ function inputData(gamedata) {
 	loading = false;
 }
 
+//Based on checkboxs clicked this will hide games that do not fit the critera of the parameters.
 function liveFilter(gamedata) {
 	// Declare variables
 	let platform = '';
@@ -164,11 +181,7 @@ function liveFilter(gamedata) {
 	});
 }
 
-/*The data gathered above is brought here to 
-be changed into something that will appear on the client end for viewing.*/
-
-/*Check to ensure where the user is on the page. If they have reached 
-a point it will fetch more data from the next page.*/
+//Check to ensure where the user is on the page. If they have reached  a point it will fetch more data from the next page.
 function infiniteScroll() {
 	$(window).scroll(function() {
 		if (
@@ -191,6 +204,7 @@ function pageLoad() {
 	});
 }
 
+//The search tool will clear current data reset the page to 1 then fetch the data.
 function pageLoadClick() {
 	$('.search-games').submit(function(e) {
 		e.preventDefault();
@@ -213,6 +227,7 @@ function initializeListeners() {
 	genreButton();
 	contactButton();
 	platformButton();
+	disclosureButton();
 	pageLoadClick();
 }
 
