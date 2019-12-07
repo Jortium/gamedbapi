@@ -2,18 +2,25 @@
 function parameterButton() {
 	$('#game-filters').click(function() {
 		$('#parameters').slideToggle();
+		$('.param-container').slideUp();
 		$('.button-text').empty();
-		if ($('#parameters').is(':visible') === true) {
-			$('.button-text').html(`Close Menu`);
+		if ($('.button-text').is('.menu-closed')) {
+			$('.button-text')
+				.addClass('menu-open')
+				.removeClass('menu-closed')
+				.append(`Close Filters`);
 		} else {
-			$('.button-text').html(`Filters & More`);
+			$('.button-text')
+				.addClass('menu-closed')
+				.removeClass('menu-open')
+				.append(`Open Filters`);
 		}
 	});
 }
 
 function platformButton() {
 	$('#platform-button').click(function() {
-		$('#platform-container').slideToggle();
+		$('#platform-container2').slideToggle();
 	});
 }
 
@@ -65,6 +72,12 @@ const params = {
 	ordering: '-released'
 };
 console.log('Parameter Check', params);
+
+$('.platform-list').click(function() {
+	if ($('#platform-all').is('checked')) {
+		$('.platform').attr('checked', true);
+	}
+});
 
 //Take params set from above and format them into workable URL to fetch data.
 function formatParams(params) {
@@ -124,7 +137,7 @@ function mapResults(responseJson) {
 	});
 	console.log(gamedata);
 	inputData(gamedata);
-	liveFilter(gamedata);
+	// liveFilter(gamedata);
 }
 
 //Then that array list ends up here for client side visability.
@@ -161,25 +174,25 @@ function inputData(gamedata) {
 }
 
 //Based on checkboxs clicked this will hide games that do not fit the critera of the parameters.
-function liveFilter(gamedata) {
-	// Declare variables
-	let platform = '';
-	gamedata.forEach(function(select) {
-		select.consoles.forEach(function(find) {
-			platform += find.platform.id;
-		});
-	});
-	$('input[type=checkbox][name=platform]').click(function() {
-		$('.game-card').hide();
-		$('input[type=checkbox][name=platform]:checked').each(
-			function() {
-				$('.platform')
-					.val()
-					.show();
-			}
-		);
-	});
-}
+// function liveFilter(gamedata) {
+// 	// Declare variables
+// 	let platform = '';
+// 	gamedata.forEach(function(select) {
+// 		select.consoles.forEach(function(find) {
+// 			platform += find.platform.id;
+// 		});
+// 	});
+// 	$('input[type=checkbox][name=platform]').click(function() {
+// 		$('.game-card').hide();
+// 		$('input[type=checkbox][name=platform]:checked').each(
+// 			function() {
+// 				$('.platform')
+// 					.val()
+// 					.show();
+// 			}
+// 		);
+// 	});
+// }
 
 //Check to ensure where the user is on the page. If they have reached  a point it will fetch more data from the next page.
 function infiniteScroll() {
@@ -229,6 +242,7 @@ function initializeListeners() {
 	platformButton();
 	disclosureButton();
 	pageLoadClick();
+	// checkPlatforms();
 }
 
 //Initalize the initalizer.

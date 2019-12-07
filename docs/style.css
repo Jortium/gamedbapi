@@ -12,7 +12,6 @@
 html,
 body {
 	width: 100%;
-	margin: 10px;
 }
 
 body {
@@ -23,8 +22,6 @@ body {
 #page-container {
 	margin: 10px;
 }
-
-/* Filter CSS */
 
 #parameters {
 	display: none;
@@ -48,11 +45,10 @@ body {
 
 #contact-container > a {
 	color: white;
-	display: flex;
+	display: flex !important;
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-items: flex-start;
-	width: 100px;
 }
 
 #top-button {
@@ -97,8 +93,23 @@ body {
 	color: white;
 }
 
-#game-filters-closed,
-#game-filters-open {
+#platform-container {
+	display: flex !important;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+}
+
+.all-shift {
+	justify-items: center;
+}
+
+.checkbox-container {
+	margin: 5px;
+}
+
+#game-filters {
+	margin: 10px 0px 10px 10px;
 	border-radius: 10px;
 	min-height: 30px;
 	min-width: 150px;
@@ -127,8 +138,4 @@ body {
 .game-name {
 	font-size: 25px;
 	font-weight: 900;
-}
-
-.overlay {
-	display: none;
 }
