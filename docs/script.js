@@ -20,7 +20,7 @@ function parameterButton() {
 
 function platformButton() {
 	$('#platform-button').click(function() {
-		$('#platform-container2').slideToggle();
+		$('#platform-container').slideToggle();
 	});
 }
 
@@ -64,20 +64,22 @@ function generateDate() {
 const params = {
 	//Permanent Params
 	parent_platforms: '2,3,6,7',
-	page_size: '10',
+	page_size: '10'
 	//Adjustable Params
-	genres: $(`input[type=checkbox][name=genre]:checked`).val(),
-	platforms: $(`input[type=checkbox][name=platform]:checked`).val(),
+	// genres: $(`input[type=checkbox][name=genre]:checked`).val(),
+	// platforms: $(`input[type=checkbox][name=platform]:checked`).val(),
 	// dates: generateDate(),
-	ordering: '-released'
+	// ordering: '-released'
 };
 console.log('Parameter Check', params);
 
-$('.platform-list').click(function() {
-	if ($('#platform-all').is('checked')) {
-		$('.platform').attr('checked', true);
-	}
-});
+// $('.platform-list').click(function() {
+// 	if ($(`input[type=checkbox][name=platform]:checked`).length) {
+// 		$('#platform-all').attr('checked', true);
+// 	} else {
+// 		$('#platform-all').attr('checked', false);
+// 	}
+// });
 
 //Take params set from above and format them into workable URL to fetch data.
 function formatParams(params) {
@@ -146,15 +148,21 @@ function inputData(gamedata) {
 	gamedata.forEach(input => {
 		info += `<li class = "game-card">`;
 		info += `<div class= "game-border">`;
-		// info += `<div class= "game-clip">`;
-		// input.video.forEach(a => {
-		// 	info += `<video width="320" height="240" controls>
-		//  <source src="${a.clips.full}" type="video/mp4">
-		// Your browser does not support the video tag.
-		// </video>`;
-		// });
-		// info += `</div>`;
+		info += `<div class= "game-clip">`;
 		info += `<div class= "game-name">${input.name}</div>`;
+		if (input.video === null) {
+			return `0`;
+		}
+		let result = Object.keys(input.video).map(function(key) {
+			return [Number(key), input.video[key]];
+		});
+		console.log(result[1][1]);
+		let videolink = result[1][1];
+		info += ` <video width="280" height="158" controls>
+  <source src=" ${videolink.full}" type="video/mp4">
+Your browser does not support the video tag.
+</video>`;
+		info += `</div>`;
 		info += `<br><span>Platforms:`;
 		input.platform.forEach(b => {
 			info += ` ${b.platform.name}`;
@@ -198,7 +206,7 @@ function inputData(gamedata) {
 function infiniteScroll() {
 	$(window).scroll(function() {
 		if (
-			$(document).height() - $(this).height() - 350 <
+			$(document).height() - $(this).height() - 400 <
 			$(this).scrollTop()
 		) {
 			if (!loading) {

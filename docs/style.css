@@ -128,14 +128,22 @@ body {
 }
 
 .game-border {
+	display: flex;
+	flex-flow: column wrap;
 	border-style: solid;
 	border-width: 2px;
 	padding: 5px;
 	width: 300px;
-	height: 200px;
+}
+
+.game-clip {
+	display: flex;
+	flex-flow: column wrap;
 }
 
 .game-name {
 	font-size: 25px;
 	font-weight: 900;
+	display: flex;
+	justify-content: center;
 }
