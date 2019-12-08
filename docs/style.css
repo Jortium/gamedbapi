@@ -141,6 +141,14 @@ body {
 	flex-flow: column wrap;
 }
 
+.no-clip {
+	display: grid;
+	justify-content: center;
+	align-content: center;
+	width: 280px;
+	height: 158px;
+}
+
 .game-name {
 	font-size: 25px;
 	font-weight: 900;

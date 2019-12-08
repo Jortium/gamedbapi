@@ -150,9 +150,25 @@ function inputData(gamedata) {
 		info += `<div class= "game-border">`;
 		info += `<div class= "game-clip">`;
 		info += `<div class= "game-name">${input.name}</div>`;
+
 		if (input.video === null) {
-			return `0`;
+			info += `<br><div class=no-clip>No preview was found.</div>`;
+			info += `<br><span>Platforms:`;
+			input.platform.forEach(b => {
+				info += ` ${b.platform.name}`;
+			});
+			info += `</span>`;
+			info += `<br><br>`;
+			info += `<span>Genres:`;
+			input.genre.forEach(c => {
+				info += ` ${c.name} `;
+			});
+			info += `</span>`;
+			info += `</li>`;
+			info += `</div>`;
+			return undefined;
 		}
+
 		let result = Object.keys(input.video).map(function(key) {
 			return [Number(key), input.video[key]];
 		});
@@ -206,7 +222,7 @@ Your browser does not support the video tag.
 function infiniteScroll() {
 	$(window).scroll(function() {
 		if (
-			$(document).height() - $(this).height() - 400 <
+			$(document).height() - $(this).height() - 600 <
 			$(this).scrollTop()
 		) {
 			if (!loading) {
