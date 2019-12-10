@@ -64,10 +64,10 @@ function generateDate() {
 const params = {
 	//Permanent Params
 	parent_platforms: '2,3,6,7',
-	page_size: '10'
+	page_size: '10',
 	//Adjustable Params
-	// genres: $(`input[type=checkbox][name=genre]:checked`).val(),
-	// platforms: $(`input[type=checkbox][name=platform]:checked`).val(),
+	// genres: $(`input[type=checkbox][name=genre]:checked`).val()
+	platforms: $(`input[type=checkbox][name=platform]:checked`).val()
 	// dates: generateDate(),
 	// ordering: '-released'
 };
@@ -92,7 +92,7 @@ function formatParams(params) {
 //Per requirements of RAWG's API usage they want only a user-agent header.
 const opts = {
 	headers: {
-		'User-Agent': `<ClassProject> / <VER 0.02> <Currently in Alpha testing>`
+		'User-Agent': `<ClassProject> / <VER 0.09> <Currently in Alpha testing>`
 	}
 };
 
@@ -131,6 +131,7 @@ function mapResults(responseJson) {
 		return {
 			//single item
 			name: game.name,
+			slug: game.slug,
 			//multiple items
 			platform: game.platforms,
 			genre: game.genres,
@@ -139,84 +140,103 @@ function mapResults(responseJson) {
 	});
 	console.log(gamedata);
 	inputData(gamedata);
-	// liveFilter(gamedata);
 }
 
 //Then that array list ends up here for client side visability.
 function inputData(gamedata) {
-	let info = '';
 	gamedata.forEach(input => {
-		info += `<li class = "game-card">`;
+		let info = '';
+		$('#card-list').append(
+			`<li class = "game-card" id="${input.slug}-card"></li>`
+		);
 		info += `<div class= "game-border">`;
-		info += `<div class= "game-clip">`;
 		info += `<div class= "game-name">${input.name}</div>`;
-
+		info += `<div class="game-space"></div>`;
 		if (input.video === null) {
 			info += `<br><div class=no-clip>No preview was found.</div>`;
-			info += `<br><span>Platforms:`;
+			info += `<span><b>Platforms</b>: `;
 			input.platform.forEach(b => {
-				info += ` ${b.platform.name}`;
+				info += `${b.platform.name} `;
 			});
 			info += `</span>`;
-			info += `<br><br>`;
-			info += `<span>Genres:`;
+			info += `<div class="game-space"></div>`;
+			info += `<span><b>Genres</b>:`;
 			input.genre.forEach(c => {
-				info += ` ${c.name} `;
+				info += `${c.name} `;
 			});
 			info += `</span>`;
-			info += `</li>`;
-			info += `</div>`;
+			$(`#${input.slug}-card`).append(info);
+			const currentGame = $(`#${input.slug}-card`);
+			input.platform.forEach(b => {
+				$(currentGame).addClass(`pzz${b.platform.id}`);
+			});
+			input.genre.forEach(c => {
+				$(currentGame).addClass(`gzz${c.id}`);
+				console.log('!!!!!!!!!!!!!!!!', currentGame);
+			});
 			return undefined;
 		}
-
 		let result = Object.keys(input.video).map(function(key) {
 			return [Number(key), input.video[key]];
 		});
-		console.log(result[1][1]);
 		let videolink = result[1][1];
-		info += ` <video width="280" height="158" controls>
-  <source src=" ${videolink.full}" type="video/mp4">
-Your browser does not support the video tag.
-</video>`;
-		info += `</div>`;
-		info += `<br><span>Platforms:`;
+		info += ` <div class= "game-clip">
+		<video width="280" height="158" controls>
+  		<source src=" ${videolink.full}" type="video/mp4">
+		Your browser does not support the video tag.
+		</video>
+		</div>`;
+		info += `<div class="game-space"></div>`;
+		info += `<span><b>Platforms</b>: `;
 		input.platform.forEach(b => {
-			info += ` ${b.platform.name}`;
+			info += `${b.platform.name} `;
 		});
 		info += `</span>`;
-		info += `<br><br>`;
-		info += `<span>Genres:`;
+		info += `<div class="game-space"></div>`;
+		info += `<span><b>Genres</b>: `;
 		input.genre.forEach(c => {
-			info += ` ${c.name} `;
+			info += `${c.name} `;
 		});
 		info += `</span>`;
-		info += `</li>`;
 		info += `</div>`;
+		$(`#${input.slug}-card`).append(info);
+		let currentGame = $(`#${input.slug}-card`);
+		input.platform.forEach(b => {
+			$(currentGame).addClass(`${b.platform.id}pm`);
+		});
+		input.genre.forEach(c => {
+			$(currentGame).addClass(`${c.id}ge`);
+		});
 	});
-	$('#card-list').append(info);
 	loading = false;
 }
 
+function filterByPlatform() {
+	$('#platform-container').submit(e => {
+		e.preventDefault();
+		liveFilter();
+	});
+}
+
 //Based on checkboxs clicked this will hide games that do not fit the critera of the parameters.
-// function liveFilter(gamedata) {
-// 	// Declare variables
-// 	let platform = '';
-// 	gamedata.forEach(function(select) {
-// 		select.consoles.forEach(function(find) {
-// 			platform += find.platform.id;
-// 		});
-// 	});
-// 	$('input[type=checkbox][name=platform]').click(function() {
-// 		$('.game-card').hide();
-// 		$('input[type=checkbox][name=platform]:checked').each(
-// 			function() {
-// 				$('.platform')
-// 					.val()
-// 					.show();
-// 			}
-// 		);
-// 	});
-// }
+function liveFilter(gamedata) {
+	let platform = '';
+	gamedata.forEach(function(select) {
+		select.consoles.forEach(function(find) {
+			platform += find.platform.id;
+		});
+	});
+	$('input[type=checkbox][name=platform]').click(function() {
+		$('.game-card').hide();
+		$('input[type=checkbox][name=platform]:checked').each(
+			function() {
+				$('.platform')
+					.val()
+					.show();
+			}
+		);
+	});
+}
 
 //Check to ensure where the user is on the page. If they have reached  a point it will fetch more data from the next page.
 function infiniteScroll() {
@@ -266,7 +286,6 @@ function initializeListeners() {
 	platformButton();
 	disclosureButton();
 	pageLoadClick();
-	// checkPlatforms();
 }
 
 //Initalize the initalizer.

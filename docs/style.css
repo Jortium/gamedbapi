@@ -155,3 +155,7 @@ body {
 	display: flex;
 	justify-content: center;
 }
+
+.game-space {
+	height: 15px;
+}
