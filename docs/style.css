@@ -12,6 +12,7 @@
 html,
 body {
 	width: 100%;
+	background-color: black;
 }
 
 body {
@@ -23,44 +24,6 @@ body {
 	margin: 10px;
 }
 
-#parameters {
-	display: none;
-}
-
-#platform-container {
-	display: none;
-}
-
-#genre-container {
-	display: none;
-}
-
-#contact-container {
-	display: none;
-}
-
-#disclosure-container {
-	display: none;
-}
-
-#contact-container > a {
-	color: white;
-	display: flex !important;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-items: flex-start;
-}
-
-#top-button {
-	display: block;
-	top: 0;
-	right: 0;
-	float: right;
-	z-index: 10;
-	position: fixed;
-	background-color: black;
-	width: 100%;
-}
 
 #top-spacer {
 	height: 50px;
@@ -76,6 +39,10 @@ body {
 	margin: 5px;
 	width: 200px;
 	height: 50px;
+}
+
+#search-button{
+	background-color:transparent;
 }
 
 .fa-searchengin {
@@ -125,6 +92,7 @@ body {
 	display: flex;
 	flex-flow: column wrap;
 	margin: 10px;
+	color: white;
 }
 
 .game-border {
@@ -139,6 +107,11 @@ body {
 .game-clip {
 	display: flex;
 	flex-flow: column wrap;
+}
+
+.videolink > a{
+	color: white;
+	text-decoration: underline;
 }
 
 .no-clip {
