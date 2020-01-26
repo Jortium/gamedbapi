@@ -1,34 +1,33 @@
 //This will generate the dates needed to fit critera.
-function generateDate() {
-	let date = new Date();
-	let present =
-		date.getFullYear() +
-		'-' +
-		(date.getMonth() + 1) +
-		'-' +
-		date.getDate();
-	let postdate = new Date(new Date().setDate(date.getDate() + 1825));
-	let future =
-		postdate.getFullYear() +
-		'-' +
-		(postdate.getMonth() + 1) +
-		'-' +
-		postdate.getDate();
-	return `${present},${future}`;
-}
+// function generateDate() {
+// 	let date = new Date();
+// 	let present =
+// 		date.getFullYear() +
+// 		'-' +
+// 		(date.getMonth() + 1) +
+// 		'-' +
+// 		date.getDate();
+// 	let postdate = new Date(new Date().setDate(date.getDate() + 1825));
+// 	let future =
+// 		postdate.getFullYear() +
+// 		'-' +
+// 		(postdate.getMonth() + 1) +
+// 		'-' +
+// 		postdate.getDate();
+// 	return `${present},${future}`;
+// }
 
 //Parameters to filter results.
 const params = {
 	//Permanent Params
 	parent_platforms: '2,3,6,7',
-	page_size: '20',
+	page_size: '10',
 	//Adjustable Params
-	dates: generateDate(),
+	// dates: generateDate(),
 	ordering: '-added'
 };
-console.log('Parameter Check', params);
 
-//Take params set from above and format them into workable URL to fetch data.
+// Take params set from above and format them into workable URL to fetch data.
 function formatParams(params) {
 	const queryItems = Object.keys(params).map(
 		key => `${key}=${params[key]}`
@@ -64,40 +63,48 @@ function fetchGames(game) {
 	fetch(generateURL(game), opts)
 		.then(response => response.json())
 		.then(responseJson => {
+			console.log(responseJson)
 			mapResults(responseJson);
 		})
 		.catch(error => {
-			console.log(`Something went wrong: ${error.message}`);
+			alert(`Something went wrong: ${error.message}`);
 		});
-	console.log('Page Check', pageNum);
+
 }
 
 //The results from the fetch end up here to be mapped and changed in to a workable array list.
 function mapResults(responseJson) {
-	const gamedata = responseJson.results.map(game => {
-		return {
-			//single item
-			name: game.name,
-			slug: game.slug,
-			//multiple items
-			platform: game.platforms,
-			genre: game.genres,
-			video: game.clip,
-			date: game.released
-		};
-	});
-	inputData(gamedata);
+	console.log('responseJson', responseJson)
+	let gamedata;
+	if (responseJson && responseJson.results ){
+		gamedata = responseJson.results.map(game => {
+			return {
+				//single item
+				name: game.name,
+				slug: game.slug,
+				id: game.id,
+				//multiple items
+				platform: game.platforms,
+				genre: game.genres,
+				video: game.clip,
+				date: game.released
+			};
+		});
+		inputData(gamedata);
+		generateDetails(gamedata);
+	}
 }
 
 //Then that array list ends up here for client side visability.
 function inputData(gamedata) {
+	console.log('gamedata',gamedata)
 	gamedata.forEach(input => {
 		let info = '';
 		$('#card-list').append(
-			`<li class = "game-card" id="${input.slug}-card"></li>`
+			`<li class = "game-card ${input.slug}-card"></li>`
 		);
 		info += `<div class= "game-border">`;
-		info += `<div class= "game-name">${input.name}</div>`;
+		info += `<div class= "game-name" id="${input.id}">${input.name}</div>`;
 		info += `<div class="game-space"></div>`;
 		if (input.video === null) {
 			info += `<div class=no-clip>No clips here yet!</div>`;
@@ -122,7 +129,6 @@ function inputData(gamedata) {
 		});
 		let videolink = result[1][1];
 		let videolink2 = result[2][1]
-		console.log(videolink2)
 		info += ` <div class= "game-clip">
 		<video width="280" height="158" controls>
   		<source src=" ${videolink.full}" type="video/mp4">
@@ -146,10 +152,62 @@ function inputData(gamedata) {
 		});
 		info += `</span>`;
 		info += `</div>`;
-		$(`#${input.slug}-card`).append(info);
+		$(`.${input.slug}-card`).append(info);
 		});
 	loading = false;
 }
+
+function generateDetails(gamedata){
+	let id;
+	$('.game-name').click(function(){
+		console.log($(this).attr('id'))
+	gamedata.forEach(input => {
+		console.log(input.id)
+		if(input.id.toString() === $(this).attr('id')) {
+			id = input.id;
+		}
+	})
+	console.log(id)
+//	let fetchthis = input.id
+	let detailURL = `https://api.rawg.io/api/games/${id}`;
+	console.log(detailURL)
+	//})
+})
+}
+
+fetch(generateURL(), opts)
+.then(secondary => secondary.json())
+.then(secondaryJson => {
+	mapResults(secondaryJson);
+})
+.catch(error => {
+	alert(`Something went wrong: ${error.message}`);
+});
+}
+
+// function fetchDetails(gamedata) {
+
+
+
+// function fetchGameID(gamedata) {
+// 	const dataArray = [];
+// 	for (const url of gamedata) {
+// 		const idurl = `https://api.rawg.io/api/games/${url.id}`;
+// 		const response = fetch(idurl, opts);
+// 		const responseJson =  response.json();
+// 		const gameId =  inputGameID(responseJson);
+// 		dataArray.push(gameId);
+// 	}
+// 	return dataArray;
+// }
+
+// function inputGameID(secondaryJson) {
+// 	const moredata = {
+// 		title: secondaryJson.name,
+// 		description: secondaryJson.description
+// 	};
+// 	return moredata;
+// }
 
 
 //Check to ensure where the user is on the page. If they have reached  a point it will fetch more data from the next page.
