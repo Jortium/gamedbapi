@@ -1,86 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0"
-		/>
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-		<script
-			src="https://kit.fontawesome.com/fa29d79d9b.js"
-			crossorigin="anonymous"
-		></script>
+    <script
+      src="https://kit.fontawesome.com/fa29d79d9b.js"
+      crossorigin="anonymous"
+    ></script>
 
-		<link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
 
-		<link
-			href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
-			rel="stylesheet"
-		/>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
 
-		<link
-			rel="apple-touch-icon"
-			sizes="180x180"
-			href="images/apple-touch-icon.png"
-		/>
-		<link
-			rel="icon"
-			type="image/png"
-			sizes="32x32"
-			href="images/favicon-32x32.png"
-		/>
-		<link
-			rel="icon"
-			type="image/png"
-			sizes="16x16"
-			href="images/favicon-16x16.png"
-		/>
-		<link rel="manifest" href="images/site.webmanifest" />
-		<title>Future Games</title>
-	</head>
-<body>
-		<div id="parameters">
-			<form class="search-games">
-				<input
-					type="text"
-					placeholder="Search..."
-					name="search"
-					class="search-param"
-				/>
-				<button
-					type="submit"
-					class="web-button"
-					id="search-button"
-				>
-					<i class="fab fa-searchengin"></i>
-				</button>
-			</form>
-		</div>
-<div>
-	<span>Search for your upcoming games in the future sorted by popularity.</span>
-</div>
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <title>Future Games</title>
+  </head>
+  <body>
+    <div id="parameters">
+      <form class="search-games">
+        <input
+          type="text"
+          placeholder="Search..."
+          name="search"
+          class="search-param"
+        />
+        <button type="submit" class="web-button" id="search-button">
+          <i class="fab fa-searchengin"></i>
+        </button>
+      </form>
+    </div>
+    <div>
+      <span
+        >Search for your upcoming games in the future sorted by
+        popularity.</span
+      >
+    </div>
 
-	<div id="top-spacer"></div>
+    <div id="top-spacer"></div>
 
+    <div id="page-container">
+      <section class="web-page" id="main">
+        <div class="web-container" id="main-container">
+          <ul class="web-list" id="card-list"></ul>
+          <span>---You've reached the bottom!---</span>
+        </div>
+      </section>
 
-		<div id="page-container">
-			<section class="web-page" id="main">
-				<div class="web-container" id="main-container">
-					<ul
-						class="web-list"
-						id="card-list"
-					></ul>
-					<span>---You've reached the bottom!---</span>
-				</div>
-			</section>
+      <div id="modal-container" class="modal">
+        <div class="detailed-modal">
+          <span class="close">&times;</span>
+          <span class="gametext"
+            >
+            </span>
+        </div>
+      </div>
 
-			<script
-			src="https://code.jquery.com/jquery-3.4.1.min.js"
-			integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-			crossorigin="anonymous"></script>
-			<script src="script.js"></script>
-		</div>
-	</body>
+      <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"
+      ></script>
+      <script src="script.js"></script>
+    </div>
+  </body>
 </html>
