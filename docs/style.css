@@ -1,171 +1,324 @@
-/*Universal CSS*/
-
 * {
-	box-sizing: border-box;
-	margin: 0;
-	border: 0;
-	padding: 0;
-	list-style: none;
-	text-decoration: none;
+  box-sizing: border-box;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  color: white;
 }
 
 html,
 body {
-	width: 100%;
-	background-color: black;
+  width: 100%;
+  background-color: black;
 }
 
 body {
-	font-family: 'Roboto', sans-serif;
-	font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
 }
 
-#page-container {
-	margin: 10px;
+.page-container {
+  display: flex;
+  align-content: center;
 }
 
-
-#top-spacer {
-	height: 50px;
+.header,
+.subheader {
+  display: flex;
+  justify-content: center;
 }
 
-#search-games {
-	background-color: transparent;
+.search-games {
+  background-color: transparent;
+  color: black;
 }
 
 .search-param {
-	border-style: solid;
-	border-width: 1px;
-	margin: 5px;
-	width: 200px;
-	height: 50px;
-}
-
-#search-button{
-	background-color:transparent;
-}
-
-.fa-searchengin {
-	font-size: 30px;
-	color: white;
-}
-
-.button-styles > button {
-	width: 100%;
-	height: 50px;
+  border-style: solid;
+  border-width: 1px;
+  margin: 5px;
+  width: 200px;
+  height: 50px;
+  color: black;
+  font-size: 25px;
 }
 
 .param-container {
-	background-color: black;
-	color: white;
+  background-color: black;
+  color: white;
+}
+
+#search-button {
+  background-color: transparent;
+}
+
+.fa-searchengin {
+  font-size: 30px;
+  color: white;
+}
+
+.fa-bars {
+  padding-left: 10px;
+}
+
+.button-styles > button {
+  width: 100%;
+  height: 50px;
+}
+
+.param-container {
+  background-color: black;
+  color: white;
 }
 
 #platform-container {
-	display: flex !important;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: flex-start;
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .all-shift {
-	justify-items: center;
+  justify-items: center;
 }
 
 .checkbox-container {
-	margin: 5px;
+  margin: 5px;
 }
 
 #game-filters {
-	margin: 10px 0px 10px 10px;
-	border-radius: 10px;
-	min-height: 30px;
-	min-width: 150px;
+  margin: 10px 0px 10px 10px;
+  border-radius: 10px;
+  min-height: 30px;
+  min-width: 150px;
 }
 
-#card-list {
-	display: flex;
-	flex-flow: row wrap;
-	justify-content: center;
+.web-list {
+  display: flex !important;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.url-name {
+  text-decoration: underline;
+}
+
+.url-name:hover {
+  cursor: pointer;
 }
 
 .game-card {
-	display: flex;
-	flex-flow: column wrap;
-	margin: 10px;
-	color: white;
+  display: flex;
+  flex-flow: column wrap;
+  margin: 10px;
+  color: white;
 }
 
 .game-border {
-	display: flex;
-	flex-flow: column wrap;
-	border-style: solid;
-	border-width: 2px;
-	padding: 5px;
-	width: 300px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  border-style: solid;
+  border-width: 2px;
+  padding: 5px;
+  width: 250px;
 }
 
 .game-clip {
-	display: flex;
-	flex-flow: column wrap;
+  display: flex;
+  flex-flow: column wrap;
 }
 
-.videolink > a{
-	color: white;
-	text-decoration: underline;
+.videolink > a {
+  color: white;
+  text-decoration: underline;
 }
 
 .no-clip {
-	display: grid;
-	justify-content: center;
-	align-content: center;
-	width: 280px;
-	height: 158px;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  width: 280px;
+  height: 158px;
 }
 
 .game-name {
-	font-size: 25px;
-	font-weight: 900;
-	display: flex;
-	justify-content: center;
+  font-size: 25px;
+  font-weight: 900;
+  display: flex;
+  justify-content: center;
 }
 
 .game-space {
-	height: 15px;
+  height: 15px;
+}
+
+.hoverover:hover {
+  cursor: pointer;
+}
+
+.contactinfo {
+  color: white;
+  width: 40px;
 }
 
 .modal {
   display: none;
   position: fixed;
-  z-index: 1;
-  left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+  z-index: 1;
   color: white;
 }
 
-.detailed-modal{
-  background-color: #505050;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+.detailed-modal {
+  height: auto !important;
+  min-height: 100% !important;
+  border-radius: 0 !important;
+  background-color: #565656;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-/* The Close Button */
+.modal-header {
+  padding: 10px;
+}
+.modal-body {
+  padding: 10px;
+}
+
 .close {
-  color: white;
+  color: #ffffff;
   float: right;
-  font-size: 28px;
+  font-size: 40px;
+  margin-right: 10px;
   font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-  color: black;
+  color: #808080;
   text-decoration: none;
   cursor: pointer;
+}
+
+/* .sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
+}
+
+.sidenav a {
+  padding-top: 10px;
+  padding-left: 5px;
+  font-size: 25px;
+  display: flex;
+  transition: 0.5s;
+}
+
+.sidenav a:hover {
+  cursor: pointer;
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+ }*/
+
+.flex-search {
+  display: flex;
+}
+
+.navBar {
+  width: 100%;
+  height: 50px;
+  font-size: 20px;
+}
+
+.navTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.navOpen,
+.navClose {
+  height: 30px;
+}
+
+.navList {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
+}
+
+.navName {
+  color: black;
+}
+
+.navList > li {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.navLink {
+  color: #ffffff;
+  margin: 5px 10px 5px 10px;
+}
+
+.navLink:hover {
+  cursor: pointer;
+  color: #808080;
+}
+
+@media (min-width: 769px) {
+  .navTop {
+    display: none;
+  }
+
+  .navOpen,
+  .navClose {
+    height: 30px;
+  }
+
+  .navNames {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .navList {
+    display: flex !important;
+    height: 50px;
+    justify-content: flex-end;
+  }
 }

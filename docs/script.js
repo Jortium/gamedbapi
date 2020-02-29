@@ -1,10 +1,39 @@
+// This will generate the dates needed to fit critera.
+function appendZeroes(n) {
+  if (n <= 9) {
+    return '0' + n;
+  }
+  return n;
+}
+
+function generateDate() {
+  let date = new Date();
+  let present =
+    date.getFullYear() +
+    '-' +
+    appendZeroes(date.getMonth() + 1) +
+    '-' +
+    appendZeroes(date.getDate());
+  let postdate = new Date(new Date().setDate(date.getDate() + 1825));
+  let future =
+    postdate.getFullYear() +
+    '-' +
+    appendZeroes(postdate.getMonth() + 1) +
+    '-' +
+    appendZeroes(postdate.getDate());
+  return `${present},${future}`;
+}
+
+console.log(generateDate());
+
 // Parameters to filter results.
 const params = {
   // Permanent Params
+  // ordering: '-released',
   parent_platforms: '2,3,6,7',
-  page_size: '2',
+  page_size: '10',
   // Adjustable Params
-  ordering: '-added'
+  dates: generateDate()
 };
 
 // Take params set from above and format them into workable URL to fetch data.
@@ -41,7 +70,6 @@ function fetchGames(game) {
   fetch(generateURL(game), opts)
     .then(response => response.json())
     .then(responseJson => {
-      console.log(responseJson);
       mapResults(responseJson);
     })
     .catch(error => {
@@ -51,7 +79,6 @@ function fetchGames(game) {
 
 // The results from the fetch end up here to be mapped and changed in to a workable array list.
 function mapResults(responseJson) {
-  console.log('responseJson', responseJson);
   let gamedata;
   if (responseJson && responseJson.results) {
     gamedata = responseJson.results.map(game => ({
@@ -66,36 +93,26 @@ function mapResults(responseJson) {
       date: game.released,
       detailsURL: `https://api.rawg.io/api/games/${game.id}`
     }));
-    inputData(gamedata);
     console.log(gamedata);
+    inputData(gamedata);
   }
 }
 
 // Then that array list ends up here for client side visability.
 function inputData(gamedata) {
-  console.log('gamedata', gamedata);
   gamedata.forEach(input => {
+    let formatDate = input.date;
+    formatDate = formatDate.split('-').map(e => (e[0] == '0' ? e.slice(1) : e));
+    formatDate = formatDate[1] + '/' + formatDate[2] + '/' + formatDate[0];
     let info = '';
-    $('#card-list').append(`<li class = "game-card ${input.slug}-card"></li>`);
-    // console.log('details', input.detailsURL);
+    $('.web-list').append(`<li class = "game-card ${input.slug}-card"></li>`);
     info += '<div class= "game-border">';
-    info += `<p class= "game-name" id="${input.id}" data-url="${input.detailsURL}">${input.name}</p>`;
+    info += `<a href="#" class="url-name"><p class= "game-name" id="${input.id}" data-url="${input.detailsURL}">${input.name}</p></a>`;
     info += '<div class="game-space"></div>';
     if (input.video === null) {
       info += '<div class=no-clip>No clips here yet!</div>';
-      info += `<div class=released><span><b>Release Date</b>: ${input.date} `;
       info += '<div class="game-space"></div>';
-      info += '<div class=platforms><span><b>Platforms</b>: ';
-      input.platform.forEach(b => {
-        info += `${b.platform.name} `;
-      });
-      info += '</span></div>';
-      info += '<div class="game-space"></div>';
-      info += '<span><b>Genres</b>:';
-      input.genre.forEach(c => {
-        info += ` ${c.name} `;
-      });
-      info += '</span>';
+      info += `<div class=released><span><b>Release Date</b>: ${formatDate}`;
       $(`#${input.slug}-card`).append(info);
       return undefined;
     }
@@ -104,80 +121,206 @@ function inputData(gamedata) {
       input.video[key]
     ]);
     const videolink = result[1][1];
-    const videolink2 = result[2][1];
     info += ` <div class= "game-clip">
-    <video width="280" height="158" controls>
+    <video width="220" height="124" controls>
       <source src=" ${videolink.full}" type="video/mp4">
     Your browser does not support the video tag.
     </video>
     </div>`;
-    info += '<div class="game-space"></div>';
-    info += `<div class="videolink"><a href=https://www.youtube.com/embed/${videolink2}>See the full video</a></div>`;
-    info += '<div class="game-space"></div>';
-    info += `<div class=released><span><b>Release Date</b>: ${input.date} </span></div>`;
-    info += '<div class="game-space"></div>';
-    info += '<span><b>Platforms</b>: ';
-    input.platform.forEach(b => {
-      info += `${b.platform.name} `;
-    });
-    info += '</span>';
-    info += '<div class="game-space"></div>';
-    info += '<span><b>Genres</b>: ';
-    input.genre.forEach(c => {
-      info += ` ${c.name} `;
-    });
-    info += '</span>';
-    info += '</div>';
+    info += `<div class=released><span><b>Release Date</b>: ${formatDate}`;
     $(`.${input.slug}-card`).append(info);
-  //  // secondFetch(input.detailsURL, input.gameID)
-  //   detailedModal(input.detailsURL);
-  })
+  });
   loading = false;
- 
- // closeModal();
-  initializeListeners();
+  detailedModal();
+  closeModal();
 }
 
 async function secondFetch(detailsURL) {
   let res;
-  console.log('doesthiswork', detailsURL);
-  //$('.game-name').click(() => {
-    fetch(detailsURL, opts)
-      .then(detailedResponse => detailedResponse.json())
-      .then(detailedResponseJson => {
-        console.log(detailedResponseJson);
-        res = detailedResponseJson
-        //detailedModal(detailedResponseJson);
-      })
-      .catch(error => {
-        alert(`Something went wrong: ${error.message}`);
-      });
-  console.log("isitworking?", res)
+  res = await fetch(detailsURL, opts)
+    .then(detailedResponse => detailedResponse.json())
+    .then(detailedResponseJson => {
+      console.log(detailedResponseJson);
+      return detailedResponseJson;
+    })
+    .catch(error => {
+      alert(`Something went wrong: ${error.message}`);
+    });
   return res;
-  //});
-  // console.log(res);
 }
-
-// console.log(res)
 
 function populateModal(data) {
-//$('.gametext').append(data.slug);
+  console.log(`${data.background_image}`);
+  $('.modal-body').append(`Genres: `);
+  let i;
+  for (i = 0; i < data.genres.length; i++) {
+    console.log(data.genres[i].name);
+    $('.modal-body').append(`${data.genres[i].name} `);
+  }
+  $('.modal-body').append(`<br>Platforms: `);
+  let ii;
+  for (ii = 0; ii < data.platforms.length; ii++) {
+    console.log(data.platforms[ii]);
+    $('.modal-body').append(`${data.platforms[ii].platform.name} `);
+  }
+  let iii;
+  for (iii = 0; iii < data.platforms.length; iii++) {
+    console.log(data.platforms[iii]);
+    $('.modal-body').append(`${data.platforms[iii].platform.name} `);
+  }
+  $('.detailed-modal').css(
+    `background-image`,
+    ` linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("${data.background_image}")`
+  );
+  $('.modal-title').append(`${data.name}`);
+  $('.modal-body').append(`<br/><br/>${data.description}<br>`);
+  $('.modal-footer').append(`
+    `);
 }
 
-async function detailedModal() {
+function detailedModal() {
   $('.game-name').click(async function() {
-    //console.log('details', $(this).getAttribute('data-details-url'));
-    console.log($(this).attr('data-url'));
     const data = await secondFetch($(this).attr('data-url'));
-    console.log('**********', data)
-   // populateModal(data);
-   // $('.modal').fadeToggle();
+    populateModal(data);
+    $('.modal').fadeIn();
+    $('body').css(`overflow`, `hidden`);
+    $('.modal').css(`overflow`, `auto`);
   });
 }
 
 function closeModal() {
   $('.close').click(() => {
-    $('.modal').fadeToggle();
+    $('.modal-title').empty();
+    $('.modal-body').empty();
+    $('.modal-footer').empty();
+    $('.modal').fadeOut();
+    $('body').css(`overflow`, `auto`);
+  });
+}
+
+function openNav() {
+  $('.fa-bars').click(() => {
+    $('.navList').width(`250px`);
+    $('body').css(`overflow`, `hidden`);
+  });
+}
+
+function closeNav() {
+  $('.closebtn').click(() => {
+    console.log('YAY IT WORKS');
+    $('.modal-title').empty();
+    $('.modal-body').empty();
+    $('.modal-footer').empty();
+    $('.navList').width(`0px`);
+    $('body').css(`overflow`, `auto`);
+  });
+}
+
+function aboutNav() {
+  $('.aboutModal').click(() => {
+    $('.modal').fadeIn();
+    $('body').css(`overflow`, `hidden`);
+    $('.modal').css(`overflow`, `auto`);
+    $('.modal-title').append(`<h1>About The Next Game</h1>`);
+    $('.modal-body').append(`
+      <span>Welcome to my API based webpage! This website is to see upcoming game previews.
+      <br>
+      Q: How do I use this website?
+      <br>
+      A: Please see my Help page for additional information.
+      <br>
+      <br>
+      Q: Who is the host of this database?
+      <br>
+      A: RAWG which can be <a href="https://api.rawg.io/docs/">located here.</a>
+      <br>
+      <br>
+      Q: What language is this written in?
+      <br>
+      A: HTML5, CSS3, JavaScript using jQuery library.
+      <br>
+      <br>
+      Q: Why is there no full video clips embeded?
+      <br>
+      A: This is actually a security measure placed by YouTube which only allows links to be used for the full video. Links can be found
+      in the modal.
+      <br>
+      <br>
+      Q: What inspired you to do this webpage?
+      <br>
+      A: Self-interest and futher my growth and knowledge of coding!
+      <br>
+      <br>
+      API Legal Notice
+      <br>
+We do not claim ownership of any of the images or data provided by the API. 
+We remove infringing content when properly notified. 
+Any data and/or images one might upload to RAWG is expressly granted a license to use. 
+You are prohibited from using the images and/or data in connection with libelous, defamatory, 
+obscene, pornographic, abusive or otherwise offensive content.
+      </span>`);
+  });
+}
+
+function helpNav() {
+  $('.helpModal').click(() => {
+    $('.modal').fadeIn();
+    $('body').css(`overflow`, `hidden`);
+    $('.modal').css(`overflow`, `auto`);
+    $('.modal-title').append(`<h1></h1>`);
+    $('.modal-body').append();
+  });
+}
+
+function contactNav() {
+  $('.contactModal').click(() => {
+    $('.modal').fadeIn();
+    $('body').css(`overflow`, `hidden`);
+    $('.modal').css(`overflow`, `auto`);
+    $('.modal-body').append(`
+    Feel free to click any of the icons seen here to reach out to me!
+      <ul class='contactcontainer'>
+        <li class='hoverover'>
+          <a href='mailto:joshwortiz@gmail.com' target='_top'>
+            <img src='images/email.png' class='contactinfo' alt='Email Icon' />
+          E-Mail
+            </a>
+        </li>
+        <li class='hoverover'>
+          <a href='#' target='_blank'>
+            <img
+              src='images/webpage.png'
+              class='contactinfo'
+              alt='Website Icon'
+            />
+            Portfolio
+          </a>
+        </li>
+        <li class='hoverover'>
+          <a href='https://github.com/OrtizJosh' target='_blank'>
+            <img
+              src='images/github.png'
+              class='contactinfo'
+              alt='GitHub Icon'
+            />
+            Github
+          </a>
+        </li>
+        <li class='hoverover'>
+          <a
+            href='https://www.linkedin.com/in/joshua-ortiz-188745184/'
+            target='_blank'
+          >
+            <img
+              src='images/linkedin.png'
+              class='contactinfo'
+              alt='LinkedIn Icon'
+            />
+            Linkedin
+          </a>
+        </li>
+      </ul>
+    `);
   });
 }
 
@@ -209,7 +352,7 @@ function pageLoadClick() {
       delete params.search;
     }
     const searchParam = $('.search-param').val();
-    $('#card-list').empty();
+    $('.web-list').empty();
     pageNum = 1;
     fetchGames(searchParam);
   });
@@ -217,12 +360,15 @@ function pageLoadClick() {
 
 // A function to tell the browser what to initalize.
 function initializeListeners() {
+  pageLoad();
   infiniteScroll();
   pageLoadClick();
-  detailedModal();
-  closeModal();
+  openNav();
+  closeNav();
+  aboutNav();
+  helpNav();
+  contactNav();
 }
-  pageLoad();
 
 // Initalize the initalizer.
-//initializeListeners();
+initializeListeners();
