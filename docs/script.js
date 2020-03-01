@@ -43,7 +43,7 @@ function formatParams(params) {
 // Per requirements of RAWG's API usage they want only a user-agent header.
 const opts = {
   headers: {
-    'User-Agent': '<ClassProject> / <VER 1.00> <Completed Version>'
+    'User-Agent': '<ClassProject> / <VER 1.02> <Completed Version>'
   }
 };
 
@@ -124,6 +124,7 @@ function inputData(gamedata) {
     Your browser does not support the video tag.
     </video>
     </div>`;
+    info += '<div class="game-space"></div>';
     info += `<div class=released><span><b>Release Date</b>: ${formatDate}`;
     $(`.${input.slug}-card`).append(info);
   });
