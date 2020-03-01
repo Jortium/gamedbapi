@@ -24,8 +24,6 @@ function generateDate() {
   return `${present},${future}`;
 }
 
-console.log(generateDate());
-
 // Parameters to filter results.
 const params = {
   // Permanent Params
@@ -45,7 +43,7 @@ function formatParams(params) {
 // Per requirements of RAWG's API usage they want only a user-agent header.
 const opts = {
   headers: {
-    'User-Agent': '<ClassProject> / <VER 0.02> <Currently in Alpha testing>'
+    'User-Agent': '<ClassProject> / <VER 1.00> <Completed Version>'
   }
 };
 
@@ -93,7 +91,6 @@ function mapResults(responseJson) {
       date: game.released,
       detailsURL: `https://api.rawg.io/api/games/${game.id}`
     }));
-    console.log(gamedata);
     inputData(gamedata);
   }
 }
@@ -140,7 +137,6 @@ async function secondFetch(detailsURL) {
   res = await fetch(detailsURL, opts)
     .then(detailedResponse => detailedResponse.json())
     .then(detailedResponseJson => {
-      console.log(detailedResponseJson);
       return detailedResponseJson;
     })
     .catch(error => {
@@ -150,32 +146,29 @@ async function secondFetch(detailsURL) {
 }
 
 function populateModal(data) {
-  console.log(`${data.background_image}`);
   $('.modal-body').append(`Genres: `);
   let i;
   for (i = 0; i < data.genres.length; i++) {
-    console.log(data.genres[i].name);
     $('.modal-body').append(`${data.genres[i].name} `);
   }
   $('.modal-body').append(`<br>Platforms: `);
   let ii;
   for (ii = 0; ii < data.platforms.length; ii++) {
-    console.log(data.platforms[ii]);
     $('.modal-body').append(`${data.platforms[ii].platform.name} `);
   }
   let iii;
   for (iii = 0; iii < data.platforms.length; iii++) {
-    console.log(data.platforms[iii]);
     $('.modal-body').append(`${data.platforms[iii].platform.name} `);
   }
+  $('.modal-body').append(
+    `<br/><a class='youtubeLink' href='https://www.youtube.com/watch?v=${data.clip.video}'>Full Video Preview</a>`
+  );
   $('.detailed-modal').css(
     `background-image`,
     ` linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("${data.background_image}")`
   );
   $('.modal-title').append(`${data.name}`);
   $('.modal-body').append(`<br/><br/>${data.description}<br>`);
-  $('.modal-footer').append(`
-    `);
 }
 
 function detailedModal() {
@@ -201,17 +194,19 @@ function closeModal() {
 function openNav() {
   $('.fa-bars').click(() => {
     $('.navList').width(`250px`);
-    $('body').css(`overflow`, `hidden`);
+    $('.flex-search').width(`250px`);
+    $('.flex-search').css(`display`, `initial`);
+    $('body').css(`overflow`, `none`);
   });
 }
 
 function closeNav() {
   $('.closebtn').click(() => {
-    console.log('YAY IT WORKS');
     $('.modal-title').empty();
     $('.modal-body').empty();
     $('.modal-footer').empty();
     $('.navList').width(`0px`);
+    $('.flex-search').width(`0px`);
     $('body').css(`overflow`, `auto`);
   });
 }
@@ -225,9 +220,15 @@ function aboutNav() {
     $('.modal-body').append(`
       <span>Welcome to my API based webpage! This website is to see upcoming game previews.
       <br>
-      Q: How do I use this website?
       <br>
-      A: Please see my Help page for additional information.
+      Q: What is the purpose of this site?
+      <br>
+      A: Purely just to view future upcoming games all in one place. I have disincluded PC games from this as... well it really opens up a flood gate. I might consider making another version of this with just PC games.
+      <br>
+      <br>
+      Q: Why is this not sorted by date?
+      <br>
+      A: This API does give this option but it causes a large slowdown. I've reached out to RAWG about this and they will notify me when it is fixed.
       <br>
       <br>
       Q: Who is the host of this database?

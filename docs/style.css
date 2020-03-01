@@ -131,6 +131,11 @@ body {
   flex-flow: column wrap;
 }
 
+.released {
+  display: flex;
+  justify-content: center;
+}
+
 .videolink > a {
   color: white;
   text-decoration: underline;
@@ -210,45 +215,19 @@ body {
   cursor: pointer;
 }
 
-/* .sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 60px;
-  transition: 0.5s;
-}
-
-.sidenav a {
-  padding-top: 10px;
-  padding-left: 5px;
-  font-size: 25px;
-  display: flex;
-  transition: 0.5s;
-}
-
-.sidenav a:hover {
-  cursor: pointer;
-  color: #f1f1f1;
-}
-
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
- }*/
-
 .flex-search {
-  display: flex;
+  position: absolute;
+  width: 0px;
+  overflow-x: hidden;
+  transition-delay: 0.1s;
+}
+
+.navDesktop {
+  display: none;
 }
 
 .navBar {
+  display: initial;
   width: 100%;
   height: 50px;
   font-size: 20px;
@@ -263,12 +242,15 @@ body {
   margin-right: 5px;
 }
 
-.navOpen,
-.navClose {
-  height: 30px;
+.closebtn {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 35px;
+  padding-right: 10px;
 }
 
 .navList {
+  height: 300px;
   height: 100%;
   width: 0;
   position: fixed;
@@ -277,7 +259,6 @@ body {
   left: 0;
   background-color: #111;
   overflow-x: hidden;
-  padding-top: 60px;
   transition: 0.5s;
 }
 
@@ -293,7 +274,6 @@ body {
 
 .navLink {
   color: #ffffff;
-  margin: 5px 10px 5px 10px;
 }
 
 .navLink:hover {
@@ -301,24 +281,26 @@ body {
   color: #808080;
 }
 
+.youtubeLink {
+  text-decoration: underline;
+}
+
 @media (min-width: 769px) {
-  .navTop {
+  .navBar {
     display: none;
   }
 
-  .navOpen,
-  .navClose {
-    height: 30px;
-  }
-
-  .navNames {
+  .navDesktop {
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
+    font-size: 25px;
   }
 
-  .navList {
-    display: flex !important;
-    height: 50px;
-    justify-content: flex-end;
+  .listDesktop {
+    display: flex;
+  }
+
+  .navLink {
+    padding: 10px 30px 10px 0px;
   }
 }
