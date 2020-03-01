@@ -292,15 +292,21 @@ body {
 
   .navDesktop {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     font-size: 25px;
   }
 
   .listDesktop {
     display: flex;
+    align-items: center;
   }
 
   .navLink {
     padding: 10px 30px 10px 0px;
+  }
+
+  .searchDesktop {
+    display: flex;
+    align-self: flex-start;
   }
 }
