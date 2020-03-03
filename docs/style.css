@@ -95,6 +95,10 @@ body {
   min-width: 150px;
 }
 
+.web-page{
+  width:100%;
+}
+
 .web-list {
   display: flex !important;
   flex-flow: row wrap;
@@ -267,10 +271,10 @@ body {
   color: black;
 }
 
-.navList > li {
+.linkMobile {
   display: flex;
-  justify-content: flex-end;
-  padding: 10px;
+  justify-content: flex-start;
+  padding: 30px 0px 0px 15px;
 }
 
 .navLink {
