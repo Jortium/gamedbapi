@@ -211,6 +211,7 @@ function closeNav() {
     $('.modal-title').empty();
     $('.modal-body').empty();
     $('.modal-footer').empty();
+    $('.detailed-modal').empty();
     $('.navList').width(`0px`);
     $('.flex-search').width(`0px`);
     $('body').css(`overflow`, `auto`);
@@ -224,7 +225,7 @@ function aboutNav() {
     $('.modal').css(`overflow`, `auto`);
     $('.detailed-modal').css(
       `background-image`,
-      ` linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url("https://i.imgur.com/O6DCBv8.jpg")`
+      ` linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("https://i.imgur.com/O6DCBv8.jpg")`
     );
     $('.modal-title').append(`<h1>About The Next Game</h1>`);
     $('.modal-body').append(`
@@ -288,6 +289,10 @@ function contactNav() {
     $('.modal').fadeIn();
     $('body').css(`overflow`, `hidden`);
     $('.modal').css(`overflow`, `auto`);
+    $('.detailed-modal').css(
+      `background-image`,
+      ` linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("https://i.imgur.com/O6DCBv8.jpg")`
+    );
     $('.modal-body').append(`
     Feel free to click any of the icons seen here to reach out to me!
       <ul class='contactcontainer'>

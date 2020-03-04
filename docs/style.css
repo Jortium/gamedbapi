@@ -310,14 +310,17 @@ body {
     padding: 10px 30px 10px 0px;
   }
 
-  .search-param {
-    display: flex;
-    align-self: flex-start;
-    padding-left: 50px;
+  .wompwomp {
+    padding-top: 50px;
+    font-size: 40px;
   }
-}
 
-.wompwomp {
-  padding-top: 50px;
-  font-size: 40px;
+  .search-games {
+    padding-left: 10px;
+    display: flex;
+  }
+
+  #search-button {
+    padding-left: 10px;
+  }
 }
