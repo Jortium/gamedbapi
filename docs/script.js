@@ -56,6 +56,7 @@ let loading = false;
 function generateURL(game) {
   const baseURL = 'https://api.rawg.io/api/games';
   if (game) {
+    console.log(game);
     params.search = game;
   }
   const queryString = formatParams(params);
@@ -373,11 +374,25 @@ function pageLoadClick() {
   });
 }
 
+function desktopLoadClick() {
+  $('.desktop-games').submit(e => {
+    e.preventDefault();
+    if (params.search) {
+      delete params.search;
+    }
+    const searchParam = $('.desktop-param').val();
+    $('.web-list').empty();
+    pageNum = 1;
+    fetchGames(searchParam);
+  });
+}
+
 // A function to tell the browser what to initalize.
 function initializeListeners() {
   pageLoad();
   infiniteScroll();
   pageLoadClick();
+  desktopLoadClick();
   openNav();
   closeNav();
   aboutNav();
