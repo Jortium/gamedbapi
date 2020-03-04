@@ -56,6 +56,7 @@ let loading = false;
 function generateURL(game) {
   const baseURL = 'https://api.rawg.io/api/games';
   if (game) {
+    console.log(game);
     params.search = game;
   }
   const queryString = formatParams(params);
@@ -68,7 +69,11 @@ function fetchGames(game) {
   fetch(generateURL(game), opts)
     .then(response => response.json())
     .then(responseJson => {
-      mapResults(responseJson);
+      if (responseJson.results.length === 0 || responseJson === undefined) {
+        $('.web-list').append(`<p class="wompwomp">No results found.</p>`);
+      } else {
+        mapResults(responseJson);
+      }
     })
     .catch(error => {
       alert(`Something went wrong: ${error.message}`);
@@ -217,6 +222,10 @@ function aboutNav() {
     $('.modal').fadeIn();
     $('body').css(`overflow`, `hidden`);
     $('.modal').css(`overflow`, `auto`);
+    $('.detailed-modal').css(
+      `background-image`,
+      ` linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url("https://i.imgur.com/O6DCBv8.jpg")`
+    );
     $('.modal-title').append(`<h1>About The Next Game</h1>`);
     $('.modal-body').append(`
       <span>Welcome to my API based webpage! This website is to see upcoming game previews.
