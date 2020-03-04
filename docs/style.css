@@ -30,13 +30,15 @@ body {
   justify-content: center;
 }
 
-.search-games {
+.search-games,
+.desktop-games {
   background-color: transparent;
   color: black;
   padding-left: 10px;
 }
 
-.search-param {
+.search-param,
+.desktop-param {
   border-style: solid;
   border-width: 1px;
   width: 200px;

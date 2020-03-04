@@ -56,7 +56,6 @@ let loading = false;
 function generateURL(game) {
   const baseURL = 'https://api.rawg.io/api/games';
   if (game) {
-    console.log(game);
     params.search = game;
   }
   const queryString = formatParams(params);
@@ -384,6 +383,7 @@ function desktopLoadClick() {
     $('.web-list').empty();
     pageNum = 1;
     fetchGames(searchParam);
+    $('.desktop-param').empty();
   });
 }
 
