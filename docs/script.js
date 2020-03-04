@@ -43,7 +43,8 @@ function formatParams(params) {
 // Per requirements of RAWG's API usage they want only a user-agent header.
 const opts = {
   headers: {
-    'User-Agent': '<ClassProject> / <VER 1.02> <Completed Version>'
+    'User-Agent':
+      '<ClassProject> / <VER 1.03> <Updated for smoother experience.>'
   }
 };
 
@@ -199,8 +200,6 @@ function closeModal() {
 function openNav() {
   $('.fa-bars').click(() => {
     $('.navList').width(`250px`);
-    $('.flex-search').width(`250px`);
-    $('.flex-search').css(`display`, `initial`);
     $('body').css(`overflow`, `none`);
   });
 }
@@ -210,9 +209,7 @@ function closeNav() {
     $('.modal-title').empty();
     $('.modal-body').empty();
     $('.modal-footer').empty();
-    $('.detailed-modal').empty();
     $('.navList').width(`0px`);
-    $('.flex-search').width(`0px`);
     $('body').css(`overflow`, `auto`);
   });
 }
@@ -270,16 +267,6 @@ Any data and/or images one might upload to RAWG is expressly granted a license t
 You are prohibited from using the images and/or data in connection with libelous, defamatory, 
 obscene, pornographic, abusive or otherwise offensive content.
       </span>`);
-  });
-}
-
-function helpNav() {
-  $('.helpModal').click(() => {
-    $('.modal').fadeIn();
-    $('body').css(`overflow`, `hidden`);
-    $('.modal').css(`overflow`, `auto`);
-    $('.modal-title').append(`<h1></h1>`);
-    $('.modal-body').append();
   });
 }
 
@@ -362,6 +349,7 @@ function pageLoad() {
 // The search tool will clear current data reset the page to 1 then fetch the data.
 function pageLoadClick() {
   $('.search-games').submit(e => {
+    $('.navList').width(`0px`);
     e.preventDefault();
     if (params.search) {
       delete params.search;
@@ -396,7 +384,6 @@ function initializeListeners() {
   openNav();
   closeNav();
   aboutNav();
-  helpNav();
   contactNav();
 }
 
