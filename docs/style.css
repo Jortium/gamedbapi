@@ -118,7 +118,7 @@ body {
 .game-card {
   display: flex;
   flex-flow: column wrap;
-  margin: 10px;
+  padding-top: 20px;
   color: white;
 }
 
@@ -292,9 +292,18 @@ body {
   text-decoration: underline;
 }
 
+.wompwomp {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
 @media (min-width: 769px) {
   .navBar {
     display: none;
+  }
+
+  .game-card {
+    padding-left: 10px;
   }
 
   .navDesktop {

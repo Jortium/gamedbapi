@@ -71,9 +71,12 @@ function fetchGames(game) {
     .then(responseJson => {
       if (responseJson.results.length === 0 || responseJson === undefined) {
         $('.web-list').append(`<p class="wompwomp">No results found.</p>`);
+      } else if (responseJson.next === null || responseJson === null) {
+        $('.web-list').append(`<p class="wompwomp">No more results found.</p>`);
       } else {
         mapResults(responseJson);
       }
+      console.log(responseJson);
     })
     .catch(error => {
       alert(`Something went wrong: ${error.message}`);
