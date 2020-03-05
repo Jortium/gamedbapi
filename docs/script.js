@@ -29,7 +29,7 @@ const params = {
   // Permanent Params
   // ordering: '-released',
   parent_platforms: '2,3,6,7',
-  page_size: '10',
+  page_size: '11',
   // Adjustable Params
   dates: generateDate()
 };
@@ -332,7 +332,7 @@ function contactNav() {
 // Check to ensure where the user is on the page. If they have reached  a point it will fetch more data from the next page.
 function infiniteScroll() {
   $(window).scroll(function() {
-    if ($(document).height() - $(this).height() - 600 < $(this).scrollTop()) {
+    if ($(document).height() - $(this).height() - 1000 < $(this).scrollTop()) {
       if (!loading) {
         pageNum++;
         loading = true;
