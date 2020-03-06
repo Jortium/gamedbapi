@@ -70,16 +70,15 @@ function fetchGames(game) {
     .then(response => response.json())
     .then(responseJson => {
       if (responseJson.results.length === 0 || responseJson === undefined) {
-        $('.web-list').append(`<p class="wompwomp">No results found.</p>`);
+        $('.noresults').append(`<p class="wompwomp">No results found.</p>`);
       } else if (responseJson.next === null || responseJson === null) {
-        $('.web-list').append(`<p class="wompwomp">No more results found.</p>`);
+        mapResults(responseJson);
+        $('.noresults').append(
+          `<br><p class="wompwomp">No more results found.</p>`
+        );
       } else {
         mapResults(responseJson);
       }
-      console.log(responseJson);
-    })
-    .catch(error => {
-      alert(`Something went wrong: ${error.message}`);
     });
 }
 
@@ -136,6 +135,7 @@ function inputData(gamedata) {
     info += `<div class=released><span><b>Release Date</b>: ${formatDate}`;
     $(`.${input.slug}-card`).append(info);
   });
+  $('ul li:empty').remove();
   loading = false;
   detailedModal();
   closeModal();
@@ -353,12 +353,14 @@ function pageLoad() {
 function pageLoadClick() {
   $('.search-games').submit(e => {
     $('.navList').width(`0px`);
+    $('.noresults').empty();
     e.preventDefault();
     if (params.search) {
       delete params.search;
     }
     const searchParam = $('.search-param').val();
     $('.web-list').empty();
+
     pageNum = 1;
     fetchGames(searchParam);
   });
@@ -372,6 +374,7 @@ function desktopLoadClick() {
     }
     const searchParam = $('.desktop-param').val();
     $('.web-list').empty();
+    $('.noresults').empty();
     pageNum = 1;
     fetchGames(searchParam);
     $('.desktop-param').empty();

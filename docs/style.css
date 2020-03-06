@@ -295,6 +295,8 @@ body {
 .wompwomp {
   padding-top: 15px;
   padding-bottom: 15px;
+  display: flex;
+  justify-content: center;
 }
 
 @media (min-width: 769px) {
