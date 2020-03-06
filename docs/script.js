@@ -71,11 +71,6 @@ function fetchGames(game) {
     .then(responseJson => {
       if (responseJson.results.length === 0 || responseJson === undefined) {
         $('.noresults').append(`<p class="wompwomp">No results found.</p>`);
-      } else if (responseJson.next === null || responseJson === null) {
-        mapResults(responseJson);
-        $('.noresults').append(
-          `<br><p class="wompwomp">No more results found.</p>`
-        );
       } else {
         mapResults(responseJson);
       }
@@ -136,6 +131,8 @@ function inputData(gamedata) {
     $(`.${input.slug}-card`).append(info);
   });
   $('ul li:empty').remove();
+  $('.noresults').empty();
+  $('.noresults').append(`<p class="wompwomp">No more results found.</p>`);
   loading = false;
   detailedModal();
   closeModal();
