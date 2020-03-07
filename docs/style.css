@@ -52,7 +52,7 @@ body {
   color: white;
 }
 
-#search-button {
+.web-button {
   background-color: transparent;
 }
 
@@ -293,7 +293,7 @@ body {
 }
 
 .wompwomp {
-  padding-top: 200px;
+  padding-top: 20vh;
   padding-bottom: 15px;
   display: flex;
   justify-content: center;
@@ -333,7 +333,7 @@ body {
     display: flex;
   }
 
-  #search-button {
+  .web-button {
     padding-left: 10px;
   }
 }

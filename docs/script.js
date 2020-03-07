@@ -27,9 +27,9 @@ function generateDate() {
 // Parameters to filter results.
 const params = {
   // Permanent Params
-  // ordering: '-released',
+  ordering: 'released',
   parent_platforms: '2,3,6,7',
-  page_size: '11',
+  page_size: '25',
   // Adjustable Params
   dates: generateDate()
 };
@@ -69,11 +69,7 @@ function fetchGames(game) {
   fetch(generateURL(game), opts)
     .then(response => response.json())
     .then(responseJson => {
-      if (responseJson.results.length === 0 || responseJson === undefined) {
-        $('.noresults').append(`<p class="wompwomp">No results found.</p>`);
-      } else {
-        mapResults(responseJson);
-      }
+      mapResults(responseJson);
     });
 }
 
@@ -106,7 +102,7 @@ function inputData(gamedata) {
     let info = '';
     $('.web-list').append(`<li class = "game-card ${input.slug}-card"></li>`);
     info += '<div class= "game-border">';
-    info += `<a href="#" class="url-name"><p class= "game-name" id="${input.id}" data-url="${input.detailsURL}">${input.name}</p></a>`;
+    info += `<a class="url-name"><h2><p class= "game-name" id="${input.id}" data-url="${input.detailsURL}">${input.name}</p></h2></a>`;
     info += '<div class="game-space"></div>';
     if (input.video === null) {
       info += '<div class=no-clip>No clips here yet!</div>';
@@ -130,12 +126,9 @@ function inputData(gamedata) {
     info += `<div class=released><span><b>Release Date</b>: ${formatDate}`;
     $(`.${input.slug}-card`).append(info);
   });
-  $('ul li:empty').remove();
-  $('.noresults').empty();
-  $('.noresults').append(`<p class="wompwomp">No more results found.</p>`);
   loading = false;
+  $(`ul li:empty`).remove();
   detailedModal();
-  closeModal();
 }
 
 async function secondFetch(detailsURL) {
@@ -151,40 +144,38 @@ async function secondFetch(detailsURL) {
   return res;
 }
 
-function populateModal(data) {
-  $('.modal-body').append(`Genres: `);
+function detailedModal() {
+  $('.game-name').click(async function() {
+    let data = await secondFetch($(this).attr('data-url'));
+    $('.modal').fadeIn();
+    $('body').css(`overflow`, `hidden`);
+    $('.modal').css(`overflow`, `auto`);
+    populateModal(data);
+  });
+}
+
+async function populateModal(data) {
+  console.log(data);
+  let moreinfo = '';
+  moreinfo += `<div class="modal-header"><span class="close">&times;</span><div class="modal-title"><h2>${data.name}<h2></div></div>`;
+  moreinfo += `<div class="modal-body"><span class="gametext">Genres: `;
   let i;
   for (i = 0; i < data.genres.length; i++) {
-    $('.modal-body').append(`${data.genres[i].name} `);
+    moreinfo += `${data.genres[i].name} `;
   }
-  $('.modal-body').append(`<br>Platforms: `);
+  moreinfo += `<br>Platforms: `;
   let ii;
   for (ii = 0; ii < data.platforms.length; ii++) {
-    $('.modal-body').append(`${data.platforms[ii].platform.name} `);
+    moreinfo += `${data.platforms[ii].platform.name} `;
   }
-  let iii;
-  for (iii = 0; iii < data.platforms.length; iii++) {
-    $('.modal-body').append(`${data.platforms[iii].platform.name} `);
-  }
-  $('.modal-body').append(
-    `<br/><a class='youtubeLink' href='https://www.youtube.com/watch?v=${data.clip.video}'>Full Video Preview</a>`
-  );
+  moreinfo += `<br><a class='youtubeLink' href='https://www.youtube.com/watch?v=${data.clip.video}'>Full Video Preview</a>`;
+  moreinfo += `<br><br>${data.description}<br></span></div>`;
+  await $('.detailed-modal').html(moreinfo);
   $('.detailed-modal').css(
     `background-image`,
     ` linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("${data.background_image}")`
   );
-  $('.modal-title').append(`${data.name}`);
-  $('.modal-body').append(`<br/><br/>${data.description}<br>`);
-}
-
-function detailedModal() {
-  $('.game-name').click(async function() {
-    const data = await secondFetch($(this).attr('data-url'));
-    populateModal(data);
-    $('.modal').fadeIn();
-    $('body').css(`overflow`, `hidden`);
-    $('.modal').css(`overflow`, `auto`);
-  });
+  closeModal();
 }
 
 function closeModal() {
@@ -194,6 +185,7 @@ function closeModal() {
     $('.modal-footer').empty();
     $('.modal').fadeOut();
     $('body').css(`overflow`, `auto`);
+    $('.modal').css(`overflow`, `hidden`);
   });
 }
 
@@ -351,13 +343,12 @@ function pageLoadClick() {
   $('.search-games').submit(e => {
     $('.navList').width(`0px`);
     $('.noresults').empty();
+    $('.web-list').empty();
     e.preventDefault();
     if (params.search) {
       delete params.search;
     }
     const searchParam = $('.search-param').val();
-    $('.web-list').empty();
-
     pageNum = 1;
     fetchGames(searchParam);
   });
@@ -365,16 +356,15 @@ function pageLoadClick() {
 
 function desktopLoadClick() {
   $('.desktop-games').submit(e => {
+    $('.web-list').empty();
+    $('.noresults').empty();
     e.preventDefault();
     if (params.search) {
       delete params.search;
     }
     const searchParam = $('.desktop-param').val();
-    $('.web-list').empty();
-    $('.noresults').empty();
     pageNum = 1;
     fetchGames(searchParam);
-    $('.desktop-param').empty();
   });
 }
 

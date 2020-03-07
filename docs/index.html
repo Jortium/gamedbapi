@@ -1,164 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-      <script
-         src="https://kit.fontawesome.com/fa29d79d9b.js"
-         crossorigin="anonymous"
-         ></script>
-      <link rel="stylesheet" type="text/css" href="style.css" />
-      <link
-         href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
-         rel="stylesheet"
-         />
-      <link
-         rel="apple-touch-icon"
-         sizes="180x180"
-         href="images/apple-touch-icon.png"
-         />
-      <link
-         rel="icon"
-         type="image/png"
-         sizes="32x32"
-         href="images/favicon-32x32.png"
-         />
-      <link
-         rel="icon"
-         type="image/png"
-         sizes="16x16"
-         href="images/favicon-16x16.png"
-         />
-      <link rel="manifest" href="images/site.webmanifest" />
-      <title>TNG</title>
-   </head>
-   <body>
-      <div class="header">
-         <h1>The Next Games</h1>
-      </div>
-      <div class="subheader">
-         <h5>FIND YOUR FUTURE FAVORITES</h5>
-      </div>
-      <nav class="navDesktop">
-         <li>
-            <form class="desktop-games">
-               <input
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script
+      src="https://kit.fontawesome.com/fa29d79d9b.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <title>TNG</title>
+  </head>
+  <body>
+    <div class="header">
+      <h1>The Next Games</h1>
+    </div>
+    <div class="subheader">
+      <h5>FIND YOUR FUTURE FAVORITES</h5>
+    </div>
+    <nav class="navDesktop">
+      <ul>
+        <li>
+          <form class="desktop-games">
+            <input
+              type="text"
+              placeholder="Search..."
+              name="search"
+              class="desktop-param"
+            />
+            <button type="submit" class="web-button">
+              <i class="fab fa-searchengin"></i>
+            </button>
+          </form>
+        </li>
+      </ul>
+      <ul class="listDesktop">
+        <li class="aboutModal">
+          <a class="navLink">About</a>
+        </li>
+        <li class="contactModal">
+          <a class="navLink">Contact</a>
+        </li>
+      </ul>
+    </nav>
+    <nav class="navBar">
+      <div class="navContainer">
+        <div class="navMobile">
+          <i class="fas fa-bars"></i>
+        </div>
+        <div class="navWrap">
+          <ul class="navList">
+            <li class="closebtn">&times;</li>
+            <li>
+              <form class="search-games">
+                <input
                   type="text"
                   placeholder="Search..."
                   name="search"
-                  class="desktop-param"
-                  />
-               <button type="submit" class="web-button" id="search-button">
-               <i class="fab fa-searchengin"></i>
-               </button>
-            </form>
-         </li>
-         <ul class="listDesktop">
-            <li class="aboutModal">
-               <a class="navLink">About</a>
+                  class="search-param"
+                />
+                <button type="submit" class="web-button">
+                  <i class="fab fa-searchengin"></i>
+                </button>
+              </form>
             </li>
-            <li class="contactModal">
-               <a class="navLink">Contact</a>
+            <li class="linkMobile aboutModal">
+              <img
+                src="images/about.png"
+                class="contactinfo"
+                alt="About Icon"
+              />
+              <a class="navLink">About</a>
             </li>
-         </ul>
-      </nav>
-      <nav class="navBar">
-         <div class="navContainer">
-            <div class="navMobile">
-               <i class="fas fa-bars"></i>
-            </div>
-            <div class="navWrap">
-               <ul class="navList">
-                  <li class="closebtn">&times;</li>
-                  <li>
-                     <form class="search-games">
-                     <input
-                        type="text"
-                        placeholder="Search..."
-                        name="search"
-                        class="search-param"
-                        />
-                     <button type="submit" class="web-button" id="search-button">
-                     <i class="fab fa-searchengin"></i>
-                     </button>
-                  </li>
-                  <li class="linkMobile aboutModal">
-                     <img
-                        src='images/about.png'
-                        class='contactinfo'
-                        alt='About Icon'
-                        />
-                     <a class="navLink">About</a>
-                  </li>
-                  <li class='linkMobile'>
-                     <a href='mailto:joshwortiz@gmail.com' target='_top'>
-                     <img src='images/email.png' class='contactinfo' alt='Email Icon' />
-                     E-Mail
-                     </a>
-                  </li>
-                  <li class='linkMobile'>
-                     <a href='https://ortizjosh.github.io/portfolio/' target='_blank'>
-                     <img
-                        src='images/webpage.png'
-                        class='contactinfo'
-                        alt='Website Icon'
-                        />
-                     Portfolio
-                     </a>
-                  </li>
-                  <li class='linkMobile'>
-                     <a href='https://github.com/OrtizJosh' target='_blank'>
-                     <img
-                        src='images/github.png'
-                        class='contactinfo'
-                        alt='GitHub Icon'
-                        />
-                     Github
-                     </a>
-                  </li>
-                  <li class='linkMobile'>
-                     <a
-                        href='https://www.linkedin.com/in/joshua-ortiz-188745184/'
-                        target='_blank'
-                        >
-                     <img
-                        src='images/linkedin.png'
-                        class='contactinfo'
-                        alt='LinkedIn Icon'
-                        />
-                     Linkedin
-                     </a>
-                  </li>
-               </ul>
-            </div>
-         </div>
-         </div>
-      </nav>
-      <div class="page-container">
+            <li class="linkMobile">
+              <a href="mailto:joshwortiz@gmail.com" target="_top">
+                <img
+                  src="images/email.png"
+                  class="contactinfo"
+                  alt="Email Icon"
+                />
+                E-Mail
+              </a>
+            </li>
+            <li class="linkMobile">
+              <a href="https://ortizjosh.github.io/portfolio/" target="_blank">
+                <img
+                  src="images/webpage.png"
+                  class="contactinfo"
+                  alt="Website Icon"
+                />
+                Portfolio
+              </a>
+            </li>
+            <li class="linkMobile">
+              <a href="https://github.com/OrtizJosh" target="_blank">
+                <img
+                  src="images/github.png"
+                  class="contactinfo"
+                  alt="GitHub Icon"
+                />
+                Github
+              </a>
+            </li>
+            <li class="linkMobile">
+              <a
+                href="https://www.linkedin.com/in/joshua-ortiz-188745184/"
+                target="_blank"
+              >
+                <img
+                  src="images/linkedin.png"
+                  class="contactinfo"
+                  alt="LinkedIn Icon"
+                />
+                Linkedin
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="page-container">
       <section class="web-page" id="main">
-         <div class="web-container" id="main-container">
-            <ul class="web-list"></ul>
-         </div>
-               <div class="noresults"></div>
+        <div class="web-container" id="main-container">
+          <ul class="web-list"></ul>
+        </div>
+        <div class="noresults"></div>
       </section>
 
       <div id="modal-container" class="modal">
-         <div class="detailed-modal">
-            <div class="modal-header">
-               <span class="close">&times;</span>
-               <h2 class="modal-title"></h2>
-            </div>
-            <div class="modal-body">
-               <span class="gametext"> </span>
-            </div>
-         </div>
-         <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"
-            ></script>
-         <script src="script.js"></script>
+        <div class="detailed-modal"></div>
       </div>
-   </body>
+      <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"
+      ></script>
+      <script src="script.js"></script>
+    </div>
+  </body>
 </html>
