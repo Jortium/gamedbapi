@@ -30,6 +30,10 @@ body {
   justify-content: center;
 }
 
+.subheader {
+  font-size: 12px;
+}
+
 .search-games,
 .desktop-games {
   background-color: transparent;
