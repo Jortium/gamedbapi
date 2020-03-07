@@ -137,9 +137,6 @@ async function secondFetch(detailsURL) {
     .then(detailedResponse => detailedResponse.json())
     .then(detailedResponseJson => {
       return detailedResponseJson;
-    })
-    .catch(error => {
-      alert(`Something went wrong: ${error.message}`);
     });
   return res;
 }
@@ -155,7 +152,6 @@ function detailedModal() {
 }
 
 async function populateModal(data) {
-  console.log(data);
   let moreinfo = '';
   moreinfo += `<div class="modal-header"><span class="close">&times;</span><div class="modal-title"><h2>${data.name}<h2></div></div>`;
   moreinfo += `<div class="modal-body"><span class="gametext">Genres: `;
