@@ -44,7 +44,7 @@ function formatParams(params) {
 const opts = {
   headers: {
     'User-Agent':
-      '<ClassProject> / <VER 1.03> <Updated for smoother experience.>'
+      '<ClassProject> / <VER 2.00> <Updated for smoother experience.>'
   }
 };
 
@@ -69,7 +69,11 @@ function fetchGames(game) {
   fetch(generateURL(game), opts)
     .then(response => response.json())
     .then(responseJson => {
-      mapResults(responseJson);
+      if (responseJson.results.length > 0) {
+        mapResults(responseJson);
+      } else {
+        $('.noresults').append('<p class="wompwomp">No results found.</div>');
+      }
     });
 }
 
@@ -127,7 +131,11 @@ function inputData(gamedata) {
     $(`.${input.slug}-card`).append(info);
   });
   loading = false;
+  $('.noresults').empty();
   $(`ul li:empty`).remove();
+  $('.noresults').append(
+    `<p class="wompwomp">No additional results found.</p>`
+  );
   detailedModal();
 }
 
@@ -211,7 +219,7 @@ function aboutNav() {
       `background-image`,
       ` linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("https://i.imgur.com/O6DCBv8.jpg")`
     );
-    $('.modal-title').append(`<h1>About The Next Game</h1>`);
+    $('.modal-header').append(`<h1>About The Next Game</h1>`);
     $('.modal-body').append(`
       <span>Welcome to my API based webpage! This website is to see upcoming game previews.
       <br>
@@ -221,14 +229,9 @@ function aboutNav() {
       A: Purely just to view future upcoming games all in one place. I have disincluded PC games from this as... well it really opens up a flood gate. I might consider making another version of this with just PC games.
       <br>
       <br>
-      Q: Why is this not sorted by date?
-      <br>
-      A: This API does give this option but it causes a large slowdown. I've reached out to RAWG about this and they will notify me when it is fixed.
-      <br>
-      <br>
       Q: Who is the host of this database?
       <br>
-      A: RAWG which can be <a href="https://api.rawg.io/docs/">located here.</a>
+      A: RAWG which can be <a class="youtubeLink" href="https://api.rawg.io/docs/">located here.</a>
       <br>
       <br>
       Q: What language is this written in?
@@ -256,6 +259,7 @@ You are prohibited from using the images and/or data in connection with libelous
 obscene, pornographic, abusive or otherwise offensive content.
       </span>`);
   });
+  closeModal();
 }
 
 function contactNav() {
@@ -267,6 +271,7 @@ function contactNav() {
       `background-image`,
       ` linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("https://i.imgur.com/O6DCBv8.jpg")`
     );
+    $('.modal-header').append(`<p><h1>Contact Info</h1></p>`);
     $('.modal-body').append(`
     Feel free to click any of the icons seen here to reach out to me!
       <ul class='contactcontainer'>
@@ -312,6 +317,7 @@ function contactNav() {
       </ul>
     `);
   });
+  closeModal();
 }
 
 // Check to ensure where the user is on the page. If they have reached  a point it will fetch more data from the next page.

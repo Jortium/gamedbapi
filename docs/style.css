@@ -71,6 +71,7 @@ body {
 
 .fa-bars {
   padding-left: 10px;
+  position: fixed;
 }
 
 .button-styles > button {
@@ -301,7 +302,7 @@ body {
 }
 
 .wompwomp {
-  padding-top: 20vh;
+  padding-top: 70px;
   padding-bottom: 15px;
   display: flex;
   justify-content: center;
@@ -332,7 +333,7 @@ body {
   }
 
   .wompwomp {
-    padding-top: 50px;
+    padding-top: 150px;
     font-size: 40px;
   }
 
