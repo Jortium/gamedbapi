@@ -184,8 +184,7 @@ async function populateModal(data) {
 
 function closeModal() {
   $('.close').click(() => {
-    $('.modal-header').empty();
-    $('.modal-header').append(`<span class="close">&times;</span>`);
+    $('.modal-title').empty();
     $('.modal-body').empty();
     $('.modal-footer').empty();
     $('.modal').fadeOut();
@@ -220,7 +219,7 @@ function aboutNav() {
       `background-image`,
       ` linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("https://i.imgur.com/O6DCBv8.jpg")`
     );
-    $('.modal-header').append(`<h1>About The Next Game</h1>`);
+    $('.modal-title').append(`<h1>About The Next Game</h1>`);
     $('.modal-body').append(`
       <span>Welcome to my API based webpage! This website is to see upcoming game previews.
       <br>
@@ -272,7 +271,7 @@ function contactNav() {
       `background-image`,
       ` linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("https://i.imgur.com/O6DCBv8.jpg")`
     );
-    $('.modal-header').append(`<p><h1>Contact Info</h1></p>`);
+    $('.modal-title').append(`<p><h1>Contact Info</h1></p>`);
     $('.modal-body').append(`
     Feel free to click any of the icons seen here to reach out to me!
       <ul class='contactcontainer'>
