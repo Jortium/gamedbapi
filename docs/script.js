@@ -185,6 +185,7 @@ async function populateModal(data) {
 function closeModal() {
   $('.close').click(() => {
     $('.modal-header').empty();
+    $('.modal-header').append(`<span class="close">&times;</span>`);
     $('.modal-body').empty();
     $('.modal-footer').empty();
     $('.modal').fadeOut();
